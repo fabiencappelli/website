@@ -352,7 +352,8 @@ hr {
 
 .home-hero {
   text-align: center;
-  margin-top: 40px;
+  max-width: 900px;
+  margin: 40px auto;
 }
 
 .hero-image {
@@ -360,8 +361,12 @@ hr {
   width: 100%;
   height: auto;
   border-radius: 12px;
+  transition: transform 0.4s ease;
+  max-width: 700px;
 }
-
+.hero-image:hover {
+  transform: scale(1.02);
+}
 .hero-buttons {
   margin-top: 30px;
 }
