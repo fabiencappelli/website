@@ -1,0 +1,44 @@
+title: Fabien Cappelli
+description: Portfolio & Technical Notes
+baseurl: ""
+url: ""
+
+markdown: kramdown
+
+collections:
+  projects_fr:
+    output: true
+    permalink: /fr/projects/:name/
+  projects_en:
+    output: true
+    permalink: /en/projects/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: "projects_fr"
+    values:
+      layout: project
+      lang: fr
+
+  - scope:
+      path: ""
+      type: "projects_en"
+    values:
+      layout: project
+      lang: en
+
+  - scope:
+      path: "_posts"
+    values:
+      layout: post
+
+  - scope:
+      path: "fr"
+    values:
+      lang: fr
+
+  - scope:
+      path: "en"
+    values:
+      lang: en
