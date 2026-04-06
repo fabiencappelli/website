@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: 'en' }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    {% if page.title %}
+      {{ page.title }} · {{ site.title }}
+    {% else %}
+      {{ site.title }}
+    {% endif %}
+  </title>
+  <meta name="description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 | default: site.description }}">
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+</head>
+<body>
+  <div class="site-shell">
+    <aside class="sidebar">
+      <div class="sidebar-inner">
+        <div class="brand">
+          <a href="/{{ page.lang }}/" class="brand-link">
+            <span class="brand-name">Fabien Cappelli</span>
+            <span class="brand-tagline">AI · Implementation · Embedded · Writing</span>
+          </a>
+        </div>
+
+        <nav class="main-nav">
+          <a href="/{{ page.lang }}/" class="{% if page.url == '/' or page.url == '/fr/' or page.url == '/en/' %}active{% endif %}">Home</a>
+          <a href="/{{ page.lang }}/about/" class="{% if page.url contains '/about/' %}active{% endif %}">About</a>
+          <a href="/{{ page.lang }}/projects/" class="{% if page.url contains '/projects/' %}active{% endif %}">Projects</a>
+          <a href="/{{ page.lang }}/blog/" class="{% if page.url contains '/blog/' %}active{% endif %}">Blog</a>
+        </nav>
+
+        <div class="sidebar-block">
+          <div class="sidebar-label">Language</div>
+          <div class="lang-switch">
+            {% if page.lang == "fr" %}
+              <a href="/fr/" class="lang-pill active">FR</a>
+              <a href="/en/" class="lang-pill">EN</a>
+            {% else %}
+              <a href="/fr/" class="lang-pill">FR</a>
+              <a href="/en/" class="lang-pill active">EN</a>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="sidebar-block sidebar-notes">
+          <div class="sidebar-label">Current vibe</div>
+          <p>
+            Building practical systems, documenting what works, and keeping things human.
+          </p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="content-inner">
+        {% if page.title %}
+          <header class="page-header">
+            <p class="eyebrow">$ {{ page.lang | default: "en" }}/{{ page.title | slugify }}</p>
+            <h1>{{ page.title }}</h1>
+            {% if page.description %}
+              <p class="lead">{{ page.description }}</p>
+            {% endif %}
+          </header>
+        {% endif %}
+
+        <article class="page-content">
+          {{ content }}
+        </article>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
