@@ -1,75 +1,351 @@
-<!DOCTYPE html>
-<html lang="{{ page.lang | default: 'en' }}">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>
-    {% if page.title %}
-      {{ page.title }} · {{ site.title }}
-    {% else %}
-      {{ site.title }}
-    {% endif %}
-  </title>
-  <meta name="description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 | default: site.description }}">
-  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
-</head>
-<body>
-  <div class="site-shell">
-    <aside class="sidebar">
-      <div class="sidebar-inner">
-        <div class="brand">
-          <a href="/{{ page.lang }}/" class="brand-link">
-            <span class="brand-name">Fabien Cappelli</span>
-            <span class="brand-tagline">AI · Implementation · Embedded · Writing</span>
-          </a>
-        </div>
+:root {
+  --bg: #0b0f14;
+  --bg-soft: #11161d;
+  --panel: #0f141b;
+  --panel-2: #151b23;
+  --text: #d7e0ea;
+  --muted: #8b98a7;
+  --line: #233041;
+  --accent: #7ee787;
+  --accent-soft: rgba(126, 231, 135, 0.12);
+  --link: #79c0ff;
+  --link-hover: #a5d6ff;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --radius: 16px;
+  --sidebar-width: 290px;
+  --mono: "SFMono-Regular", "Consolas", "Liberation Mono", monospace;
+  --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
 
-        <nav class="main-nav">
-          <a href="/{{ page.lang }}/" class="{% if page.url == '/' or page.url == '/fr/' or page.url == '/en/' %}active{% endif %}">Home</a>
-          <a href="/{{ page.lang }}/about/" class="{% if page.url contains '/about/' %}active{% endif %}">About</a>
-          <a href="/{{ page.lang }}/projects/" class="{% if page.url contains '/projects/' %}active{% endif %}">Projects</a>
-          <a href="/{{ page.lang }}/blog/" class="{% if page.url contains '/blog/' %}active{% endif %}">Blog</a>
-        </nav>
+* {
+  box-sizing: border-box;
+}
 
-        <div class="sidebar-block">
-          <div class="sidebar-label">Language</div>
-          <div class="lang-switch">
-            {% if page.lang == "fr" %}
-              <a href="/fr/" class="lang-pill active">FR</a>
-              <a href="/en/" class="lang-pill">EN</a>
-            {% else %}
-              <a href="/fr/" class="lang-pill">FR</a>
-              <a href="/en/" class="lang-pill active">EN</a>
-            {% endif %}
-          </div>
-        </div>
+html {
+  scroll-behavior: smooth;
+}
 
-        <div class="sidebar-block sidebar-notes">
-          <div class="sidebar-label">Current vibe</div>
-          <p>
-            Building practical systems, documenting what works, and keeping things human.
-          </p>
-        </div>
-      </div>
-    </aside>
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top right, rgba(121, 192, 255, 0.08), transparent 30%),
+    radial-gradient(circle at bottom left, rgba(126, 231, 135, 0.05), transparent 25%),
+    var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.65;
+}
 
-    <main class="content">
-      <div class="content-inner">
-        {% if page.title %}
-          <header class="page-header">
-            <p class="eyebrow">$ {{ page.lang | default: "en" }}/{{ page.title | slugify }}</p>
-            <h1>{{ page.title }}</h1>
-            {% if page.description %}
-              <p class="lead">{{ page.description }}</p>
-            {% endif %}
-          </header>
-        {% endif %}
+a {
+  color: var(--link);
+  text-decoration: none;
+}
 
-        <article class="page-content">
-          {{ content }}
-        </article>
-      </div>
-    </main>
-  </div>
-</body>
-</html>
+a:hover {
+  color: var(--link-hover);
+}
+
+.site-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  background: linear-gradient(180deg, rgba(15, 20, 27, 0.98), rgba(11, 15, 20, 0.98));
+  border-right: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.sidebar-inner {
+  height: 100%;
+  padding: 2rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.brand-link {
+  display: block;
+  color: inherit;
+}
+
+.brand-name {
+  display: block;
+  font-family: var(--mono);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.35rem;
+}
+
+.brand-tagline {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.main-nav {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.main-nav a {
+  display: block;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text);
+  transition: 0.2s ease;
+  font-family: var(--mono);
+  font-size: 0.95rem;
+}
+
+.main-nav a:hover {
+  background: var(--panel-2);
+  border-color: var(--line);
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
+.main-nav a.active {
+  background: var(--accent-soft);
+  border-color: rgba(126, 231, 135, 0.35);
+  color: var(--accent);
+}
+
+.sidebar-block {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.sidebar-label {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.lang-switch {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.lang-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+.lang-pill.active,
+.lang-pill:hover {
+  background: var(--accent-soft);
+  border-color: rgba(126, 231, 135, 0.35);
+  color: var(--accent);
+}
+
+.sidebar-notes p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.content {
+  min-width: 0;
+}
+
+.content-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 3rem 2rem 5rem;
+}
+
+.page-header {
+  margin-bottom: 2.2rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+}
+
+h1, h2, h3, h4 {
+  line-height: 1.2;
+  margin-top: 1.6em;
+  margin-bottom: 0.65em;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: 1.55rem;
+}
+
+h3 {
+  font-size: 1.18rem;
+}
+
+.lead {
+  max-width: 760px;
+  font-size: 1.08rem;
+  color: var(--muted);
+}
+
+.page-content p,
+.page-content ul,
+.page-content ol,
+.page-content blockquote {
+  max-width: 760px;
+}
+
+.page-content ul,
+.page-content ol {
+  padding-left: 1.4rem;
+}
+
+.page-content li + li {
+  margin-top: 0.35rem;
+}
+
+.page-content code {
+  padding: 0.12rem 0.35rem;
+  border-radius: 8px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.92em;
+}
+
+.page-content pre {
+  overflow-x: auto;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius);
+  background: #0a0e13;
+  border: 1px solid var(--line);
+}
+
+.page-content pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.page-content blockquote {
+  margin-left: 0;
+  padding: 1rem 1.2rem;
+  border-left: 3px solid var(--accent);
+  background: rgba(126, 231, 135, 0.05);
+  border-radius: 0 12px 12px 0;
+  color: #bfd7c3;
+}
+
+.page-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2rem 0;
+}
+
+.projects-grid,
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.card {
+  background: linear-gradient(180deg, rgba(21, 27, 35, 0.9), rgba(15, 20, 27, 0.95));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.15rem;
+  box-shadow: var(--shadow);
+  transition: 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(121, 192, 255, 0.35);
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 0.45rem;
+}
+
+.card p {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.8rem;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(121, 192, 255, 0.08);
+  border: 1px solid rgba(121, 192, 255, 0.16);
+  color: var(--link);
+  font-size: 0.78rem;
+  font-family: var(--mono);
+}
+
+@media (max-width: 960px) {
+  .site-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: relative;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sidebar-inner {
+    padding: 1.2rem 1rem;
+  }
+
+  .content-inner {
+    padding: 2rem 1rem 4rem;
+  }
+}
