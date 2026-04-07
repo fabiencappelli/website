@@ -3,6 +3,7 @@ layout: default
 title: About
 lang: fr
 description: A propos de moi
+permalink: /fr/about/
 ---
 
 Je suis spécialiste de l’implémentation orientée IA, travaillant à l’intersection des données, des systèmes et des contraintes du réel.

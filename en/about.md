@@ -3,6 +3,7 @@ layout: default
 title: About
 lang: en
 description: About me
+permalink: /en/about/
 ---
 
 I’m an AI-focused implementation specialist working at the intersection of data, systems, and real-world constraints.
