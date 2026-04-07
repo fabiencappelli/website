@@ -14,7 +14,13 @@
     <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}" />
   </head>
   <body>
-    {% assign lang = page.lang | default: 'en' %}
+    {% assign lang = page.lang | default: 'en' %} {% assign current_url =
+    page.url %} {% if current_url contains '/fr/' %} {% assign fr_url =
+    current_url %} {% assign en_url = current_url | replace_first: '/fr/',
+    '/en/' %} {% elsif current_url contains '/en/' %} {% assign en_url =
+    current_url %} {% assign fr_url = current_url | replace_first: '/en/',
+    '/fr/' %} {% else %} {% assign fr_url = '/fr/' %} {% assign en_url = '/en/'
+    %} {% endif %}
 
     <div class="site-shell">
       <aside class="sidebar">
@@ -40,19 +46,19 @@
 
             <a
               href="{{ '/' | append: lang | append: '/about/' | relative_url }}"
-              class="{% if page.url contains '/about/' %}active{% endif %}"
+              class="{% if page.url contains '/about/' or page.url contains '/about.html' %}active{% endif %}"
               >About</a
             >
 
             <a
               href="{{ '/' | append: lang | append: '/projects/' | relative_url }}"
-              class="{% if page.url contains '/projects/' %}active{% endif %}"
+              class="{% if page.url contains '/projects/' or page.url contains '/projects.html' %}active{% endif %}"
               >Projects</a
             >
 
             <a
               href="{{ '/' | append: lang | append: '/blog/' | relative_url }}"
-              class="{% if page.url contains '/blog/' %}active{% endif %}"
+              class="{% if page.url contains '/blog/' or page.url contains '/blog.html' %}active{% endif %}"
               >Blog</a
             >
           </nav>
@@ -61,12 +67,12 @@
             <div class="sidebar-label">Language</div>
             <div class="lang-switch">
               <a
-                href="{{ '/fr/' | relative_url }}"
+                href="{{ fr_url | relative_url }}"
                 class="lang-pill {% if lang == 'fr' %}active{% endif %}"
                 >FR</a
               >
               <a
-                href="{{ '/en/' | relative_url }}"
+                href="{{ en_url | relative_url }}"
                 class="lang-pill {% if lang == 'en' %}active{% endif %}"
                 >EN</a
               >
