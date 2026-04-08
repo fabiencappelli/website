@@ -1,6 +1,7 @@
 ---
 title: Projets
 layout: default
+permalink: /fr/projects/
 ---
 
 <h1>Projets</h1>
