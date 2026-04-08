@@ -2,27 +2,66 @@
 layout: default
 ---
 
-<h1>{{ page.title }}</h1>
-<p>{{ page.summary }}</p>
+<header class="project-header">
+  {% if page.summary %}
+  <p class="project-summary">{{ page.summary }}</p>
+  {% endif %}
+</header>
 
-<h2>Stack</h2>
-<ul>
-  {% for tech in page.stack %}
-  <li>{{ tech }}</li>
-  {% endfor %}
-</ul>
+{% if page.stack %}
+<section class="project-stack">
+  <h2>Stack</h2>
+  <ul>
+    {% for tech in page.stack %}
+    <li>{{ tech }}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
 
-<div>{{ content }}</div>
+<div class="project-content">{{ content }}</div>
 
 <h2>Related posts</h2>
 
-{% assign posts = site.posts | where: "project", page.slug | where: "lang",
-page.lang %}
+<hr />
 
-<ul>
+{% assign posts = site.posts | where: "project", page.slug | where: "lang",
+page.lang | sort: "date" | reverse %} {% if posts.size > 0 %}
+<section class="project-posts">
   {% for post in posts %}
-  <li>
-    <a href="{{ post.url }}">{{ post.title }}</a>
-  </li>
+  <article class="card project-post-card">
+    <a href="{{ post.url | relative_url }}" class="project-post-card__link">
+      {% if post.image %}
+      <div class="project-post-card__media">
+        <img
+          src="{{ post.image | relative_url }}"
+          alt="{{ post.title }}"
+          class="project-post-card__image"
+        />
+      </div>
+      {% endif %}
+
+      <div class="project-post-card__body">
+        <p class="project-post-card__date">
+          {{ post.date | date: "%-d %B %Y" }}
+        </p>
+
+        <h3 class="project-post-card__title">{{ post.title }}</h3>
+
+        {% if post.summary %}
+        <p class="project-post-card__summary">
+          {{ post.summary | strip_html | truncate: 120 }}
+        </p>
+        {% elsif post.excerpt %}
+        <p class="project-post-card__summary">
+          {{ post.excerpt | strip_html | truncate: 120 }}
+        </p>
+        {% endif %}
+      </div>
+    </a>
+  </article>
   {% endfor %}
-</ul>
+</section>
+{% else %}
+<p>No related posts yet.</p>
+{% endif %}
