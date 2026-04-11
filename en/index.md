@@ -24,8 +24,8 @@ I work today at the intersection of technical implementation, documentation, app
 
 <div class="projects-grid">
   {% for project in featured_projects limit: 2 %}
-    <div class="card">
-      <h3><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h3>
+    <a href="{{ project.url | relative_url }}" class="card card-link">
+      <h3>{{ project.title }}</h3>
       <p>{{ project.summary }}</p>
 
       {% if project.stack %}
@@ -35,7 +35,7 @@ I work today at the intersection of technical implementation, documentation, app
         {% endfor %}
       </div>
       {% endif %}
-    </div>
+    </a>
 
 {% endfor %}
 
@@ -47,13 +47,13 @@ I work today at the intersection of technical implementation, documentation, app
 
 <div class="posts-grid">
   {% for post in latest_posts limit: 2 %}
-    <div class="card">
-      <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+    <a href="{{ post.url | relative_url }}" class="card card-link">
+      <h3>{{ post.title }}</h3>
       {% if post.excerpt %}
         <p>{{ post.excerpt | strip_html | truncate: 140 }}</p>
       {% elsif post.summary %}
         <p>{{ post.summary }}</p>
       {% endif %}
-    </div>
+    </a>
   {% endfor %}
 </div>

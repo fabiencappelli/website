@@ -24,8 +24,8 @@ Je travaille aujourd'hui à l’intersection de l’implémentation technique, d
 
 <div class="projects-grid">
   {% for project in featured_projects limit: 2 %}
-    <div class="card">
-      <h3><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h3>
+    <a href="{{ project.url | relative_url }}" class="card card-link">
+      <h3>{{ project.title }}</h3>
       <p>{{ project.summary }}</p>
 
       {% if project.stack %}
@@ -35,25 +35,25 @@ Je travaille aujourd'hui à l’intersection de l’implémentation technique, d
         {% endfor %}
       </div>
       {% endif %}
-    </div>
+    </a>
 
 {% endfor %}
 
 </div>
 
-## Derniers billets
+## Derniers articles
 
 {% assign latest_posts = site.posts | where: "lang", "fr" | sort: "date" | reverse %}
 
 <div class="posts-grid">
   {% for post in latest_posts limit: 2 %}
-    <div class="card">
-      <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+    <a href="{{ post.url | relative_url }}" class="card card-link">
+      <h3>{{ post.title }}</h3>
       {% if post.excerpt %}
         <p>{{ post.excerpt | strip_html | truncate: 140 }}</p>
       {% elsif post.summary %}
         <p>{{ post.summary }}</p>
       {% endif %}
-    </div>
+    </a>
   {% endfor %}
 </div>
