@@ -10,7 +10,7 @@ hide_toc: true
 <div class="projects-grid">
   {% for project in projects %}
     <a href="{{ project.url | relative_url }}" class="card card-link">
-      <h2>{{ project.title }}</h2>
+      <h3>{{ project.title }}</h3>
       <p>{{ project.summary }}</p>
 
       {% if project.stack %}

@@ -1,13 +1,14 @@
 ---
 title: "Continuation de la v1"
 date: 2026-04-03
-lang: fr
+lang: en
 project: robie
 image: /assets/images/blog/robie_1.jpg
-categories: [robie, audio, test2]
+categories: [robie, audio]
 summary: "Reconstitution d'un environnement virtuel sain, travail sur la transcription"
 ---
 
+ANGLAIS
 ![image](/assets/images/blog/robie_1.jpg)
 
 Voici un article structuré, clair et fidèle à ce que tu as vécu — sans bullshit, avec une vraie narration technique.

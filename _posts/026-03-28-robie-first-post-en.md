@@ -1,13 +1,14 @@
 ---
 title: "Démarrage du projet"
 date: 2026-03-28
-lang: fr
+lang: en
 project: robie
 image: /assets/images/blog/robie_1.jpg
-categories: [robie, audio, test1]
+categories: [robie, audio]
 summary: "Premiers essais avec openWakeWord, LEDs et logique d’écoute sur Raspberry Pi."
 ---
 
+ANGLAIS
 ![image](/assets/images/blog/robie_1.jpg)
 
 # 🎯 Objectif

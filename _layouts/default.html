@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}" />
 </head>
 
+
 <body>
   {% assign lang = page.lang | default: 'en' %} {% assign current_url =
   page.url %} {% if current_url contains '/fr/' %} {% assign fr_url =
@@ -162,6 +163,20 @@
       );
 
       headings.forEach((heading) => observer.observe(heading));
+    });
+  </script>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "dark",
+      securityLevel: "loose",
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true,
+        curve: "basis"
+      }
     });
   </script>
 </body>

@@ -720,3 +720,58 @@ tr:nth-child(even) {
   line-height: 1;
   white-space: nowrap;
 }
+
+.mermaid {
+  margin: 2rem 0;
+  padding: 1rem;
+  background: var(--panel, #0f141b);
+  border: 1px solid var(--line, #233041);
+  border-radius: 14px;
+  overflow-x: auto;
+  text-align: center;
+}
+
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.blog-filters {
+  margin-bottom: 2rem;
+}
+
+.blog-filters__label {
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.blog-filters__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.tag-filter {
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.tag-filter:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+}
+
+.tag-filter.is-active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--text);
+}
