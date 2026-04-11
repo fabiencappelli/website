@@ -3,6 +3,8 @@ title: Robie
 slug: robie
 summary: Assistant vocal sur Raspberry Pi
 stack: [Python, Vosk, TTS]
+order: 2
+featured: true
 ---
 
 ## Construire un assistant vocal embarqué sur Raspberry Pi: Robie

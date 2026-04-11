@@ -1,192 +1,169 @@
 <!doctype html>
 <html lang="{{ page.lang | default: 'en' }}">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      {% if page.title %}{{ page.title }} · {{ site.title }}{% else %}{{
-      site.title }}{% endif %}
-    </title>
-    <meta
-      name="description"
-      content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 | default: site.description }}"
-    />
-    <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}" />
-  </head>
-  <body>
-    {% assign lang = page.lang | default: 'en' %} {% assign current_url =
-    page.url %} {% if current_url contains '/fr/' %} {% assign fr_url =
-    current_url %} {% assign en_url = current_url | replace_first: '/fr/',
-    '/en/' %} {% elsif current_url contains '/en/' %} {% assign en_url =
-    current_url %} {% assign fr_url = current_url | replace_first: '/en/',
-    '/fr/' %} {% else %} {% assign fr_url = '/fr/' %} {% assign en_url = '/en/'
-    %} {% endif %}
 
-    <div class="site-shell">
-      <aside class="sidebar sidebar-left">
-        <div class="sidebar-inner">
-          <div class="brand">
-            <a
-              href="{{ '/' | append: lang | append: '/' | relative_url }}"
-              class="brand-link"
-            >
-              <span class="brand-name">Fabien Cappelli</span>
-              <span class="brand-tagline"
-                >AI · Implementation · Embedded · Writing</span
-              >
-            </a>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    {% if page.title %}{{ page.title }} · {{ site.title }}{% else %}{{
+    site.title }}{% endif %}
+  </title>
+  <meta name="description"
+    content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 | default: site.description }}" />
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}" />
+</head>
 
-          <nav class="main-nav">
-            <a
-              href="{{ '/' | append: lang | append: '/' | relative_url }}"
-              class="{% if page.url == '/' or page.url == '/fr/' or page.url == '/en/' %}active{% endif %}"
-              >Home</a
-            >
+<body>
+  {% assign lang = page.lang | default: 'en' %} {% assign current_url =
+  page.url %} {% if current_url contains '/fr/' %} {% assign fr_url =
+  current_url %} {% assign en_url = current_url | replace_first: '/fr/',
+  '/en/' %} {% elsif current_url contains '/en/' %} {% assign en_url =
+  current_url %} {% assign fr_url = current_url | replace_first: '/en/',
+  '/fr/' %} {% else %} {% assign fr_url = '/fr/' %} {% assign en_url = '/en/'
+  %} {% endif %}
 
-            <a
-              href="{{ '/' | append: lang | append: '/about/' | relative_url }}"
-              class="{% if page.url contains '/about/' or page.url contains '/about.html' %}active{% endif %}"
-              >About</a
-            >
+  <div class="site-shell">
+    <aside class="sidebar sidebar-left">
+      <div class="sidebar-inner">
+        <div class="brand">
+          <a href="{{ '/' | append: lang | append: '/' | relative_url }}" class="brand-link">
+            <span class="brand-name">Fabien Cappelli</span>
+            <span class="brand-tagline">AI · Implementation · Embedded · Writing</span>
+          </a>
+        </div>
 
-            <a
-              href="{{ '/' | append: lang | append: '/projects/' | relative_url }}"
-              class="{% if page.url contains '/projects/' or page.url contains '/projects.html' %}active{% endif %}"
-              >Projects</a
-            >
+        <nav class="main-nav">
+          <a href="{{ '/' | append: lang | append: '/' | relative_url }}"
+            class="{% if page.url == '/' or page.url == '/fr/' or page.url == '/en/' %}active{% endif %}">Home</a>
 
-            <a
-              href="{{ '/' | append: lang | append: '/blog/' | relative_url }}"
-              class="{% if page.url contains '/blog/' or page.url contains '/blog.html' %}active{% endif %}"
-              >Blog</a
-            >
-          </nav>
+          <a href="{{ '/' | append: lang | append: '/about/' | relative_url }}"
+            class="{% if page.url contains '/about/' or page.url contains '/about.html' %}active{% endif %}">About</a>
 
-          <div class="sidebar-block">
-            <div class="sidebar-label">Language</div>
-            <div class="lang-switch">
-              <a
-                href="{{ fr_url | relative_url }}"
-                class="lang-pill {% if lang == 'fr' %}active{% endif %}"
-                >FR</a
-              >
-              <a
-                href="{{ en_url | relative_url }}"
-                class="lang-pill {% if lang == 'en' %}active{% endif %}"
-                >EN</a
-              >
-            </div>
-          </div>
+          <a href="{{ '/' | append: lang | append: '/projects/' | relative_url }}"
+            class="{% if page.url contains '/projects/' or page.url contains '/projects.html' %}active{% endif %}">Projects</a>
 
-          <div class="sidebar-block sidebar-notes">
-            <div class="sidebar-label">Current vibe</div>
-            <p>
-              Building practical systems, documenting what works, and keeping
-              things human.
-            </p>
+          <a href="{{ '/' | append: lang | append: '/blog/' | relative_url }}"
+            class="{% if page.url contains '/blog/' or page.url contains '/blog.html' %}active{% endif %}">Blog</a>
+        </nav>
+
+        <div class="sidebar-block">
+          <div class="sidebar-label">Language</div>
+          <div class="lang-switch">
+            <a href="{{ fr_url | relative_url }}" class="lang-pill {% if lang == 'fr' %}active{% endif %}">FR</a>
+            <a href="{{ en_url | relative_url }}" class="lang-pill {% if lang == 'en' %}active{% endif %}">EN</a>
           </div>
         </div>
-      </aside>
 
-      <main class="content">
-        <div class="content-inner">
-          {% if page.title %}
-          <header class="page-header">
-            <p class="eyebrow">$ {{ lang }}/{{ page.title | slugify }}</p>
-            <h1>{{ page.title }}</h1>
-            {% if page.description %}
-            <p class="lead">{{ page.description }}</p>
-            {% endif %}
-          </header>
+        <div class="sidebar-block sidebar-notes">
+          <div class="sidebar-label">Current vibe</div>
+          <p>
+            Building practical systems, documenting what works, and keeping
+            things human.
+          </p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="content-inner">
+        {% if page.title %}
+        <header class="page-header">
+          <p class="eyebrow">$ {{ lang }}/{{ page.title | slugify }}</p>
+          <h1>{{ page.title }}</h1>
+          {% if page.description %}
+          <p class="lead">{{ page.description }}</p>
           {% endif %}
+        </header>
+        {% endif %}
 
-          <article class="page-content">{{ content }}</article>
-        </div>
-      </main>
+        <article class="page-content">{{ content }}</article>
+      </div>
+    </main>
 
-      <aside class="sidebar sidebar-right" id="toc-sidebar">
-        <div class="sidebar-inner">
-          <div class="sidebar-block toc-block">
-            <div class="sidebar-label">
-              {% if lang == 'fr' %}Sur cette page{% else %}On this page{% endif
-              %}
-            </div>
-            <nav class="toc-nav" id="toc-nav"></nav>
+    {% unless page.hide_toc == true %}
+    <aside class="sidebar sidebar-right" id="toc-sidebar">
+      <div class="sidebar-inner">
+        <div class="sidebar-block toc-block">
+          <div class="sidebar-label">
+            {% if lang == 'fr' %}Sur cette page{% else %}On this page{% endif %}
           </div>
+          <nav class="toc-nav" id="toc-nav"></nav>
         </div>
-      </aside>
-    </div>
+      </div>
+    </aside>
+    {% endunless %}
+  </div>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const content = document.querySelector(".page-content");
-        const tocNav = document.getElementById("toc-nav");
-        const tocSidebar = document.getElementById("toc-sidebar");
+  <script>
+    document.addEventListener("DOMContentLoaded",function () {
+      const content = document.querySelector(".page-content");
+      const tocNav = document.getElementById("toc-nav");
+      const tocSidebar = document.getElementById("toc-sidebar");
 
-        if (!content || !tocNav || !tocSidebar) return;
+      if (!content || !tocNav || !tocSidebar) return;
 
-        const headings = content.querySelectorAll("h2, h3, h4");
+      const headings = content.querySelectorAll("h2, h3, h4");
 
-        if (!headings.length) {
-          tocSidebar.style.visibility = "hidden";
-          return;
+      if (!headings.length) {
+        tocSidebar.style.visibility = "hidden";
+        return;
+      }
+
+      const slugify = (text) =>
+        text
+          .toLowerCase()
+          .trim()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g,"")
+          .replace(/[^\w\s-]/g,"")
+          .replace(/\s+/g,"-")
+          .replace(/-+/g,"-");
+
+      const ul = document.createElement("ul");
+
+      headings.forEach((heading,index) => {
+        if (!heading.id) {
+          heading.id = slugify(heading.textContent) || `section-${index + 1}`;
         }
 
-        const slugify = (text) =>
-          text
-            .toLowerCase()
-            .trim()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/[^\w\s-]/g, "")
-            .replace(/\s+/g, "-")
-            .replace(/-+/g, "-");
+        const li = document.createElement("li");
+        li.className = `toc-level-${heading.tagName.toLowerCase()}`;
 
-        const ul = document.createElement("ul");
+        const a = document.createElement("a");
+        a.href = `#${heading.id}`;
+        a.textContent = heading.textContent;
 
-        headings.forEach((heading, index) => {
-          if (!heading.id) {
-            heading.id = slugify(heading.textContent) || `section-${index + 1}`;
-          }
-
-          const li = document.createElement("li");
-          li.className = `toc-level-${heading.tagName.toLowerCase()}`;
-
-          const a = document.createElement("a");
-          a.href = `#${heading.id}`;
-          a.textContent = heading.textContent;
-
-          li.appendChild(a);
-          ul.appendChild(li);
-        });
-
-        tocNav.appendChild(ul);
-
-        const links = tocNav.querySelectorAll("a");
-
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                const id = entry.target.id;
-                links.forEach((link) => {
-                  link.classList.toggle(
-                    "active",
-                    link.getAttribute("href") === `#${id}`,
-                  );
-                });
-              }
-            });
-          },
-          {
-            rootMargin: "0px 0px -70% 0px",
-            threshold: 0.1,
-          },
-        );
-
-        headings.forEach((heading) => observer.observe(heading));
+        li.appendChild(a);
+        ul.appendChild(li);
       });
-    </script>
-  </body>
+
+      tocNav.appendChild(ul);
+
+      const links = tocNav.querySelectorAll("a");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.id;
+              links.forEach((link) => {
+                link.classList.toggle(
+                  "active",
+                  link.getAttribute("href") === `#${id}`,
+                );
+              });
+            }
+          });
+        },
+        {
+          rootMargin: "0px 0px -70% 0px",
+          threshold: 0.1,
+        },
+      );
+
+      headings.forEach((heading) => observer.observe(heading));
+    });
+  </script>
+</body>
+
 </html>

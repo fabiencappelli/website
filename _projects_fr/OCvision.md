@@ -3,6 +3,8 @@ title: Segmentation Sémantique d’Images (Projets Open Classroom 8 & 9)
 slug: OCvision
 summary: Segmentation sémantique d’images appliquée à des systèmes de vision intelligents, en utilisant des scènes urbaines issues du dataset Cityscapes.
 stack: [Python, Keras, Segmentation Models, FastAPI, Streamlit, Docker]
+featured: true
+order: 1
 ---
 
 L’objectif était de concevoir, entraîner, comparer et déployer des modèles de deep learning capables d’assigner une classe sémantique à chaque pixel d’une image, tout en équilibrant :
