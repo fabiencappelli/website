@@ -23,7 +23,7 @@ Je travaille aujourd'hui à l’intersection de l’implémentation technique, d
 {% assign featured_projects = site.projects_fr | where: "featured", true | sort: "order" %}
 
 <div class="projects-grid">
-  {% for project in featured_projects limit: 2 %}
+  {% for project in featured_projects limit: 4 %}
     <a href="{{ project.url | relative_url }}" class="card card-link">
       <h3>{{ project.title }}</h3>
       <p>{{ project.summary }}</p>
