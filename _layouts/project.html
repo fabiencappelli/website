@@ -9,13 +9,13 @@ layout: default
 </header>
 
 {% if page.stack %}
-<section class="project-stack">
-  <h2>Stack</h2>
-  <ul>
+<section class="project-stack" aria-label="Project stack">
+  <p class="project-stack__label">Stack</p>
+  <div class="project-stack__badges">
     {% for tech in page.stack %}
-    <li>{{ tech }}</li>
+    <span class="tech-badge">{{ tech }}</span>
     {% endfor %}
-  </ul>
+  </div>
 </section>
 {% endif %}
 
@@ -33,11 +33,7 @@ page.lang | sort: "date" | reverse %} {% if posts.size > 0 %}
     <a href="{{ post.url | relative_url }}" class="project-post-card__link">
       {% if post.image %}
       <div class="project-post-card__media">
-        <img
-          src="{{ post.image | relative_url }}"
-          alt="{{ post.title }}"
-          class="project-post-card__image"
-        />
+        <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" class="project-post-card__image" />
       </div>
       {% endif %}
 

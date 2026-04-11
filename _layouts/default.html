@@ -23,7 +23,7 @@
     %} {% endif %}
 
     <div class="site-shell">
-      <aside class="sidebar">
+      <aside class="sidebar sidebar-left">
         <div class="sidebar-inner">
           <div class="brand">
             <a
@@ -104,6 +104,89 @@
           <article class="page-content">{{ content }}</article>
         </div>
       </main>
+
+      <aside class="sidebar sidebar-right" id="toc-sidebar">
+        <div class="sidebar-inner">
+          <div class="sidebar-block toc-block">
+            <div class="sidebar-label">
+              {% if lang == 'fr' %}Sur cette page{% else %}On this page{% endif
+              %}
+            </div>
+            <nav class="toc-nav" id="toc-nav"></nav>
+          </div>
+        </div>
+      </aside>
     </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const content = document.querySelector(".page-content");
+        const tocNav = document.getElementById("toc-nav");
+        const tocSidebar = document.getElementById("toc-sidebar");
+
+        if (!content || !tocNav || !tocSidebar) return;
+
+        const headings = content.querySelectorAll("h2, h3, h4");
+
+        if (!headings.length) {
+          tocSidebar.style.visibility = "hidden";
+          return;
+        }
+
+        const slugify = (text) =>
+          text
+            .toLowerCase()
+            .trim()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^\w\s-]/g, "")
+            .replace(/\s+/g, "-")
+            .replace(/-+/g, "-");
+
+        const ul = document.createElement("ul");
+
+        headings.forEach((heading, index) => {
+          if (!heading.id) {
+            heading.id = slugify(heading.textContent) || `section-${index + 1}`;
+          }
+
+          const li = document.createElement("li");
+          li.className = `toc-level-${heading.tagName.toLowerCase()}`;
+
+          const a = document.createElement("a");
+          a.href = `#${heading.id}`;
+          a.textContent = heading.textContent;
+
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+
+        tocNav.appendChild(ul);
+
+        const links = tocNav.querySelectorAll("a");
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const id = entry.target.id;
+                links.forEach((link) => {
+                  link.classList.toggle(
+                    "active",
+                    link.getAttribute("href") === `#${id}`,
+                  );
+                });
+              }
+            });
+          },
+          {
+            rootMargin: "0px 0px -70% 0px",
+            threshold: 0.1,
+          },
+        );
+
+        headings.forEach((heading) => observer.observe(heading));
+      });
+    </script>
   </body>
 </html>

@@ -4,8 +4,6 @@ layout: default
 permalink: /en/projects/
 ---
 
-<h1>Projets</h1>
-
 {% assign projects = site.projects_en %}
 
 {% for project in projects %}

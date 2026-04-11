@@ -5,7 +5,7 @@ summary: Assistant vocal sur Raspberry Pi
 stack: [Python, Vosk, TTS]
 ---
 
-# Construire un assistant vocal embarqué sur Raspberry Pi: Robie
+## Construire un assistant vocal embarqué sur Raspberry Pi: Robie
 
 Il y a quelques années je cédais à la tentation de l'essai gratuit d'Audible pour faire écouter à ma fille aînée alors âgée de huit ans Bilbo le Hobbit, magnifiquement lu, devais-je alors découvrir, par Dominique Pinon.
 
