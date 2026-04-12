@@ -4,7 +4,7 @@ date: 2026-03-28
 lang: fr
 project: robie
 image: /assets/images/blog/robie_1.jpg
-categories: [robie, audio, test1]
+categories: [robie, audio]
 summary: "Premiers essais avec openWakeWord, LEDs et logique d’écoute sur Raspberry Pi."
 ---
 

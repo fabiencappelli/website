@@ -4,7 +4,7 @@ date: 2026-04-03
 lang: en
 project: robie
 image: /assets/images/blog/robie_1.jpg
-categories: [robie, audio, test2]
+categories: [robie, audio]
 summary: "Rebuilding a clean virtual environment, working on transcription"
 ---
 

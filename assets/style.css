@@ -722,20 +722,22 @@ tr:nth-child(even) {
 }
 
 .mermaid {
-  margin: 2rem 0;
+  background: #0f141b;
+  border: 1px solid #233041;
+  border-radius: 16px;
   padding: 1rem;
-  background: var(--panel, #0f141b);
-  border: 1px solid var(--line, #233041);
-  border-radius: 14px;
-  overflow-x: auto;
-  text-align: center;
+  overflow: hidden;
+  margin: 2rem 0;
 }
 
 .mermaid svg {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
+  width: 100%;
+  height: 70vh;
+  cursor: grab;
+}
+
+.mermaid svg:active {
+  cursor: grabbing;
 }
 
 .blog-filters {
