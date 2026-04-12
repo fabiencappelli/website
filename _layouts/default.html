@@ -5,23 +5,83 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
-    {% if page.title %}{{ page.title }} · {{ site.title }}{% else %}{{
-    site.title }}{% endif %}
+    {% if page.title %}{{ page.title }} · {{ site.title }}{% else %}{{ site.title }}{% endif %}
   </title>
   <meta name="description"
     content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 | default: site.description }}" />
   <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}" />
 </head>
 
-
 <body>
-  {% assign lang = page.lang | default: 'en' %} {% assign current_url =
-  page.url %} {% if current_url contains '/fr/' %} {% assign fr_url =
-  current_url %} {% assign en_url = current_url | replace_first: '/fr/',
-  '/en/' %} {% elsif current_url contains '/en/' %} {% assign en_url =
-  current_url %} {% assign fr_url = current_url | replace_first: '/en/',
-  '/fr/' %} {% else %} {% assign fr_url = '/fr/' %} {% assign en_url = '/en/'
-  %} {% endif %}
+  {% assign lang = page.lang | default: 'en' %}
+  {% assign current_url = page.url %}
+
+  {% assign fr_url = '/fr/' %}
+  {% assign en_url = '/en/' %}
+
+  {% assign is_post = false %}
+  {% if page.collection == 'posts' or page.path contains '_posts/' %}
+  {% assign is_post = true %}
+  {% endif %}
+
+  {% if is_post %}
+  {%- comment -%}
+  Pour les posts, Jekyll transforme souvent :
+  - mon-post_fr.md -> mon-post-fr.html
+  - mon-post_en.md -> mon-post-en.html
+
+  Donc on enlève à la fois les suffixes underscore et les suffixes hyphen.
+  {%- endcomment -%}
+
+  {% assign base_slug = page.slug %}
+  {% assign base_slug = base_slug | remove: '_fr' | remove: '_en' | remove: '-fr' | remove: '-en' %}
+
+  {% if lang == 'fr' %}
+  {% assign target_lang = 'en' %}
+  {% else %}
+  {% assign target_lang = 'fr' %}
+  {% endif %}
+
+  {% assign translated_post = nil %}
+
+  {% for post in site.posts %}
+  {% assign candidate_slug = post.slug %}
+  {% assign candidate_slug = candidate_slug | remove: '_fr' | remove: '_en' | remove: '-fr' | remove: '-en' %}
+
+  {% if post.lang == target_lang and candidate_slug == base_slug %}
+  {% assign translated_post = post %}
+  {% break %}
+  {% endif %}
+  {% endfor %}
+
+  {% if lang == 'fr' %}
+  {% assign fr_url = page.url %}
+  {% if translated_post %}
+  {% assign en_url = translated_post.url %}
+  {% else %}
+  {% assign en_url = '/en/blog/' %}
+  {% endif %}
+  {% else %}
+  {% assign en_url = page.url %}
+  {% if translated_post %}
+  {% assign fr_url = translated_post.url %}
+  {% else %}
+  {% assign fr_url = '/fr/blog/' %}
+  {% endif %}
+  {% endif %}
+
+  {% else %}
+  {% if current_url contains '/fr/' %}
+  {% assign fr_url = current_url %}
+  {% assign en_url = current_url | replace_first: '/fr/', '/en/' %}
+  {% elsif current_url contains '/en/' %}
+  {% assign en_url = current_url %}
+  {% assign fr_url = current_url | replace_first: '/en/', '/fr/' %}
+  {% else %}
+  {% assign fr_url = '/fr/' %}
+  {% assign en_url = '/en/' %}
+  {% endif %}
+  {% endif %}
 
   <div class="site-shell">
     <aside class="sidebar sidebar-left">
@@ -35,20 +95,28 @@
 
         <nav class="main-nav">
           <a href="{{ '/' | append: lang | append: '/' | relative_url }}"
-            class="{% if page.url == '/' or page.url == '/fr/' or page.url == '/en/' %}active{% endif %}">Home</a>
+            class="{% if page.url == '/' or page.url == '/fr/' or page.url == '/en/' %}active{% endif %}">
+            {% if lang == 'fr' %}Accueil{% else %}Home{% endif %}
+          </a>
 
           <a href="{{ '/' | append: lang | append: '/about/' | relative_url }}"
-            class="{% if page.url contains '/about/' or page.url contains '/about.html' %}active{% endif %}">About</a>
+            class="{% if page.url contains '/about/' or page.url contains '/about.html' %}active{% endif %}">
+            {% if lang == 'fr' %}À propos{% else %}About{% endif %}
+          </a>
 
           <a href="{{ '/' | append: lang | append: '/projects/' | relative_url }}"
-            class="{% if page.url contains '/projects/' or page.url contains '/projects.html' %}active{% endif %}">Projects</a>
+            class="{% if page.url contains '/projects/' or page.url contains '/projects.html' %}active{% endif %}">
+            {% if lang == 'fr' %}Projets{% else %}Projects{% endif %}
+          </a>
 
           <a href="{{ '/' | append: lang | append: '/blog/' | relative_url }}"
-            class="{% if page.url contains '/blog/' or page.url contains '/blog.html' %}active{% endif %}">Blog</a>
+            class="{% if page.url contains '/blog/' or page.url contains '/blog.html' %}active{% endif %}">
+            Blog
+          </a>
         </nav>
 
         <div class="sidebar-block">
-          <div class="sidebar-label">Language</div>
+          <div class="sidebar-label">{% if lang == 'fr' %}Langue{% else %}Language{% endif %}</div>
           <div class="lang-switch">
             <a href="{{ fr_url | relative_url }}" class="lang-pill {% if lang == 'fr' %}active{% endif %}">FR</a>
             <a href="{{ en_url | relative_url }}" class="lang-pill {% if lang == 'en' %}active{% endif %}">EN</a>
@@ -56,10 +124,15 @@
         </div>
 
         <div class="sidebar-block sidebar-notes">
-          <div class="sidebar-label">Current vibe</div>
+          <div class="sidebar-label">
+            {% if lang == 'fr' %}Ambiance du moment{% else %}Current vibe{% endif %}
+          </div>
           <p>
-            Building practical systems, documenting what works, and keeping
-            things human.
+            {% if lang == 'fr' %}
+            Construire des systèmes utiles, documenter ce qui marche, et garder une approche humaine.
+            {% else %}
+            Building practical systems, documenting what works, and keeping things human.
+            {% endif %}
           </p>
         </div>
       </div>
@@ -150,7 +223,7 @@
               links.forEach((link) => {
                 link.classList.toggle(
                   "active",
-                  link.getAttribute("href") === `#${id}`,
+                  link.getAttribute("href") === `#${id}`
                 );
               });
             }
@@ -159,12 +232,13 @@
         {
           rootMargin: "0px 0px -70% 0px",
           threshold: 0.1,
-        },
+        }
       );
 
       headings.forEach((heading) => observer.observe(heading));
     });
   </script>
+
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
 
@@ -185,7 +259,6 @@
         el.innerHTML = svg;
       }
 
-      // charger svg-pan-zoom après rendu
       const script = document.createElement("script");
       script.src = "https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js";
       script.onload = () => {
