@@ -10,7 +10,7 @@ summary: "Premiers essais avec openWakeWord, LEDs et logique d’écoute sur Ras
 
 ![image](/assets/images/blog/robie_1.jpg)
 
-# 🎯 Objectif
+## Objectif
 
 Construire un système capable de :
 
@@ -25,7 +25,7 @@ Le tout **localement**, sans dépendance cloud.
 
 ---
 
-# 🧱 Architecture globale
+## Architecture globale
 
 Le système se décompose en plusieurs briques :
 
@@ -39,11 +39,11 @@ Micro
 → Réponse (sons / TTS / LEDs)
 ```
 
-Chaque brique a été explorée et validée séparément.
+Chaque brique va être explorée et validée séparément.
 
 ---
 
-# 🎧 1. Audio et matériel
+## 1. Audio et matériel
 
 Le projet s’appuie sur :
 
@@ -59,9 +59,9 @@ Points importants :
 
 ---
 
-# 🔊 2. Wake word : le premier défi
+## 2. Wake word : le premier défi
 
-## ❌ Picovoice (Porcupine)
+### ❌ Picovoice (Porcupine)
 
 Initialement envisagé, mais abandonné :
 
@@ -69,7 +69,7 @@ Initialement envisagé, mais abandonné :
 - dépendance externe
 - moins adapté à un projet perso long terme
 
-## ✅ openWakeWord
+### ✅ openWakeWord
 
 Choix retenu :
 
@@ -77,13 +77,13 @@ Choix retenu :
 - fonctionne en local
 - basé sur des modèles TFLite
 
-### Difficultés rencontrées :
+#### Difficultés rencontrées :
 
 - modèles manquants → `download_models()`
 - conflits NumPy / SciPy → downgrade et alignement versions
 - faux positifs → nécessité de filtrage
 
-### Solutions mises en place :
+#### Solutions mises en place :
 
 - seuil élevé (`~0.95`)
 - plusieurs frames consécutives
@@ -94,7 +94,7 @@ Choix retenu :
 
 ---
 
-# 🤖 3. Problème classique : le robot s’auto-déclenche
+## 3. Problème classique : le robot s’auto-déclenche
 
 Robie détectait son propre son (feedback audio).
 
@@ -106,23 +106,15 @@ Solution :
 
 - ajouter un délai de grâce
 
-👉 Sans ça, boucle infinie garantie.
+---
+
+## 4. STT ≠ compréhension
+
+On essaye `faster-whisper`
 
 ---
 
-# 🧠 4. STT ≠ compréhension
-
-Whisper (ou whisper.cpp) fait :
-
-👉 **audio → texte**
-
-Mais ne comprend rien.
-
-La “compréhension” est une autre couche.
-
----
-
-# 🤖 5. Introduction d’un LLM local
+## 5. Introduction d’un LLM local
 
 Test avec Ollama + Qwen2.5 (1.5B)
 
@@ -136,15 +128,13 @@ Résultat :
 
 ---
 
-# ⏱️ La métrique clé : la latence
+## La métrique clé : la latence
 
-Ce qui compte n’est pas la vitesse globale, mais :
+Ce qui compte n’est pas la vitesse globale, mais le temps avant que la réponse commence.
 
-👉 **le temps avant que la réponse commence**
-
-- < 3 secondes → bon
-- 3–6 → acceptable
-- > 6 → frustrant
+- `< 3 secondes` : bon
+- `3–6` : acceptable
+- `> 6` : frustrant
 
 Astuce UX :
 
@@ -155,11 +145,11 @@ Astuce UX :
 
 ---
 
-# 🧠 6. Rôle du LLM dans Robie
+## 6. Rôle du LLM dans Robie
 
-Le LLM n’est pas utilisé pour “discuter”.
+Le LLM ne peut pas être utilisé pour “discuter”.
 
-👉 Il sert à :
+Il servira à :
 
 - transformer une phrase en intention
 - structurer la commande
@@ -180,11 +170,11 @@ Sortie :
 }
 ```
 
-👉 Le code Python exécute ensuite l’action.
+Le code Python exécute ensuite l’action.
 
 ---
 
-# 🌍 7. Support du français
+## 7. Support du français
 
 Contrainte importante : enfants francophones.
 
@@ -200,7 +190,7 @@ Solutions :
 
 ---
 
-# ⚡ 8. Et la Coral TPU ?
+## 8. Et ma Coral TPU ?
 
 Non utilisable pour les LLM.
 
@@ -209,7 +199,7 @@ Pourquoi :
 - Coral = modèles TFLite quantifiés
 - LLM = architecture incompatible
 
-👉 Usage futur pertinent :
+Usage futur pertinent :
 
 - vision (caméra)
 - détection d’objets
@@ -217,84 +207,14 @@ Pourquoi :
 
 ---
 
-# 🤖 9. Et le Jetson ?
+## Conclusion
 
-Perspective long terme.
+Cette première session montre qu’il est probablement possible de construire un assistant embarqué local. Pour la suite, je dois finir de tester chaque brique, et commencer à envisager l'architecture globale de ma v2.
 
-## Raspberry Pi
+### V1
 
-- bon pour :
-  - audio
-  - logique
-  - petits LLM
+Test des briques et stabilité des performances
 
-## Jetson Orin
+### V2
 
-- permet :
-  - LLM plus gros (3B–7B)
-  - vision temps réel
-  - multimodal
-
-👉 Pi = prototype
-👉 Jetson = robot complet
-
----
-
-# 🔌 10. Détail matériel : la LED rouge
-
-Après `shutdown`, la LED rouge reste allumée.
-
-👉 normal :
-
-- LED = alimentation
-- Pi n’a pas de bouton OFF
-
-👉 seule solution : couper le courant
-
----
-
-# 🚀 Conclusion
-
-Ce projet montre qu’il est possible de construire un assistant embarqué local :
-
-## Ce qui fonctionne aujourd’hui
-
-- wake word local (avec tuning)
-- enregistrement audio stable
-- LLM local utilisable (~2s)
-- pipeline complet fonctionnel
-
-## Ce qui reste à améliorer
-
-- wake word personnalisé (“Hey Robie”)
-- robustesse STT (enfants)
-- TTS naturel
-- gestion des intents plus riche
-
----
-
-# 🧠 Insight clé
-
-Un assistant embarqué n’est pas :
-
-👉 “un modèle puissant”
-
-C’est :
-
-👉 **une architecture bien découpée**
-
----
-
-# 🔮 Suite du projet
-
-- intégration Whisper → LLM → actions
-- mémoire (notes, contexte)
-- personnalité Robie
-- vision (via Jetson ou Coral)
-
----
-
-Robie V1 n’est pas encore “intelligent”.
-Mais il est déjà **vivant**.
-
-Et c’est là que tout commence.
+Construction du pipeline et premiers tests en conditions réelles

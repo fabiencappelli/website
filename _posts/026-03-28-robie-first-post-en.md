@@ -1,301 +1,220 @@
 ---
-title: "Démarrage du projet"
+title: "Project Kickoff"
 date: 2026-03-28
 lang: en
 project: robie
 image: /assets/images/blog/robie_1.jpg
-categories: [robie, audio]
-summary: "Premiers essais avec openWakeWord, LEDs et logique d’écoute sur Raspberry Pi."
+categories: [robie, audio, test1]
+summary: "First experiments with openWakeWord, LEDs, and listening logic on Raspberry Pi."
 ---
 
-ANGLAIS
 ![image](/assets/images/blog/robie_1.jpg)
 
-# 🎯 Objectif
+## Goal
 
-Construire un système capable de :
+Build a system able to:
 
-- écouter en permanence
-- détecter un mot d’éveil (wake word)
-- enregistrer une commande vocale
-- comprendre l’intention
-- déclencher une action
-- répondre avec du son ou de la voix
+- listen continuously
+- detect a wake word
+- record a voice command
+- understand the intent
+- trigger an action
+- respond with sound or voice
 
-Le tout **localement**, sans dépendance cloud.
+All of it **locally**, with no cloud dependency.
 
 ---
 
-# 🧱 Architecture globale
+## Overall Architecture
 
-Le système se décompose en plusieurs briques :
+The system is split into several blocks:
 
 ```text
-Micro
+Microphone
 → Wake word
-→ Enregistrement
+→ Recording
 → Speech-to-Text (Whisper)
-→ Interprétation (LLM)
+→ Interpretation (LLM)
 → Action
-→ Réponse (sons / TTS / LEDs)
+→ Response (sounds / TTS / LEDs)
 ```
 
-Chaque brique a été explorée et validée séparément.
+Each block will be explored and validated separately.
 
 ---
 
-# 🎧 1. Audio et matériel
+## 1. Audio and Hardware
 
-Le projet s’appuie sur :
+The project relies on:
 
 - Raspberry Pi (Debian Bookworm)
-- Adafruit Voice Bonnet (micros + LEDs + haut-parleurs)
-- sortie audio testée via bruit rose
+- Adafruit Voice Bonnet (microphones + LEDs + speakers)
+- audio output tested with pink noise
 
-Points importants :
+Important points:
 
-- bien identifier le bon device audio
-- gérer correctement l’entrée/sortie simultanée
-- prévoir une gestion propre des LEDs (cleanup)
+- correctly identify the right audio device
+- properly handle simultaneous input/output
+- implement clean LED management (cleanup)
 
 ---
 
-# 🔊 2. Wake word : le premier défi
+## 2. Wake Word: the First Challenge
 
-## ❌ Picovoice (Porcupine)
+### ❌ Picovoice (Porcupine)
 
-Initialement envisagé, mais abandonné :
+Initially considered, but dropped:
 
-- demande désormais un compte pro
-- dépendance externe
-- moins adapté à un projet perso long terme
+- now requires a pro account
+- external dependency
+- less suitable for a long-term personal project
 
-## ✅ openWakeWord
+### ✅ openWakeWord
 
-Choix retenu :
+Chosen solution:
 
 - open source
-- fonctionne en local
-- basé sur des modèles TFLite
+- runs locally
+- based on TFLite models
 
-### Difficultés rencontrées :
+#### Issues encountered:
 
-- modèles manquants → `download_models()`
-- conflits NumPy / SciPy → downgrade et alignement versions
-- faux positifs → nécessité de filtrage
+- missing models → `download_models()`
+- NumPy / SciPy conflicts → downgrade and version alignment
+- false positives → filtering required
 
-### Solutions mises en place :
+#### Solutions implemented:
 
-- seuil élevé (`~0.95`)
-- plusieurs frames consécutives
-- période réfractaire (10s)
-- arrêt du stream pendant l’action
+- high threshold (`~0.95`)
+- several consecutive frames
+- refractory period (10s)
+- stop audio stream during actions
 
-👉 Le point clé : **un wake word n’est pas fiable “brut” — il faut le cadrer**
-
----
-
-# 🤖 3. Problème classique : le robot s’auto-déclenche
-
-Robie détectait son propre son (feedback audio).
-
-Solution :
-
-- couper l’écoute pendant :
-  - enregistrement
-  - réponse sonore
-
-- ajouter un délai de grâce
-
-👉 Sans ça, boucle infinie garantie.
+👉 Key takeaway: **a wake word is not reliable “raw” — it needs control logic**
 
 ---
 
-# 🧠 4. STT ≠ compréhension
+## 3. Classic Problem: the Robot Triggers Itself
 
-Whisper (ou whisper.cpp) fait :
+Robie was detecting its own audio output (feedback loop).
 
-👉 **audio → texte**
+Solution:
 
-Mais ne comprend rien.
+- pause listening during:
+  - recording
+  - sound response
 
-La “compréhension” est une autre couche.
-
----
-
-# 🤖 5. Introduction d’un LLM local
-
-Test avec Ollama + Qwen2.5 (1.5B)
-
-Résultat :
-
-- latence ~2 secondes
-- fonctionnement stable
-- viable pour un usage embarqué
-
-👉 Conclusion : **un petit LLM local sur Pi est exploitable**
+- add a grace delay
 
 ---
 
-# ⏱️ La métrique clé : la latence
+## 4. STT ≠ Understanding
 
-Ce qui compte n’est pas la vitesse globale, mais :
-
-👉 **le temps avant que la réponse commence**
-
-- < 3 secondes → bon
-- 3–6 → acceptable
-- > 6 → frustrant
-
-Astuce UX :
-
-- LED jaune = “réflexion”
-- son intermédiaire
-
-👉 transforme un lag en comportement naturel
+Testing `faster-whisper`
 
 ---
 
-# 🧠 6. Rôle du LLM dans Robie
+## 5. Introducing a Local LLM
 
-Le LLM n’est pas utilisé pour “discuter”.
+Test with Ollama + Qwen2.5 (1.5B)
 
-👉 Il sert à :
+Result:
 
-- transformer une phrase en intention
-- structurer la commande
+- ~2 second latency
+- stable behavior
+- viable for embedded usage
 
-Exemple :
+👉 Conclusion: **a small local LLM on Raspberry Pi is usable**
 
-Entrée :
+---
 
-> “Robie, note que Thomas doit prendre son manteau demain”
+## The Key Metric: Latency
 
-Sortie :
+What matters is not total speed, but the time before the response starts.
+
+- `< 3 seconds` : good
+- `3–6` : acceptable
+- `> 6` : frustrating
+
+UX trick:
+
+- yellow LED = “thinking”
+- intermediate sound cue
+
+👉 turns lag into natural behavior
+
+---
+
+## 6. Role of the LLM in Robie
+
+The LLM should not be used for open-ended chatting.
+
+It will be used to:
+
+- transform a sentence into an intent
+- structure the command
+
+Example:
+
+Input:
+
+> “Robie, note that Thomas needs to bring his coat tomorrow”
+
+Output:
 
 ```json
 {
   "intent": "take_note",
-  "content": "Thomas doit prendre son manteau demain",
-  "answer": "C’est noté."
+  "content": "Thomas needs to bring his coat tomorrow",
+  "answer": "Noted."
 }
 ```
 
-👉 Le code Python exécute ensuite l’action.
+The Python code then executes the action.
 
 ---
 
-# 🌍 7. Support du français
+## 7. French Language Support
 
-Contrainte importante : enfants francophones.
+Important constraint: French-speaking children.
 
-Solutions :
+Solutions:
 
-- Whisper multilingue (pas `.en`)
-- langue forcée en `fr`
-- LLM multilingue (Qwen OK)
-- prompts en français
-- intents en français
+- multilingual Whisper (not `.en`)
+- language forced to `fr`
+- multilingual LLM (Qwen works well)
+- prompts in French
+- intents in French
 
-⚠️ Attention : la reconnaissance des voix d’enfants est plus difficile → prévoir tolérance.
-
----
-
-# ⚡ 8. Et la Coral TPU ?
-
-Non utilisable pour les LLM.
-
-Pourquoi :
-
-- Coral = modèles TFLite quantifiés
-- LLM = architecture incompatible
-
-👉 Usage futur pertinent :
-
-- vision (caméra)
-- détection d’objets
-- perception environnement
+⚠️ Note: children’s voices are harder to recognize → tolerance will be needed.
 
 ---
 
-# 🤖 9. Et le Jetson ?
+## 8. What About My Coral TPU?
 
-Perspective long terme.
+Not usable for LLMs.
 
-## Raspberry Pi
+Why:
 
-- bon pour :
-  - audio
-  - logique
-  - petits LLM
+- Coral = quantized TFLite models
+- LLM = incompatible architecture
 
-## Jetson Orin
+Relevant future uses:
 
-- permet :
-  - LLM plus gros (3B–7B)
-  - vision temps réel
-  - multimodal
-
-👉 Pi = prototype
-👉 Jetson = robot complet
+- vision (camera)
+- object detection
+- environmental perception
 
 ---
 
-# 🔌 10. Détail matériel : la LED rouge
+## Conclusion
 
-Après `shutdown`, la LED rouge reste allumée.
+This first session shows that building a local embedded assistant is probably achievable. Next step: finish testing each block, then start designing the overall architecture for version 2.
 
-👉 normal :
+### V1
 
-- LED = alimentation
-- Pi n’a pas de bouton OFF
+Component testing and performance stability
 
-👉 seule solution : couper le courant
+### V2
 
----
-
-# 🚀 Conclusion
-
-Ce projet montre qu’il est possible de construire un assistant embarqué local :
-
-## Ce qui fonctionne aujourd’hui
-
-- wake word local (avec tuning)
-- enregistrement audio stable
-- LLM local utilisable (~2s)
-- pipeline complet fonctionnel
-
-## Ce qui reste à améliorer
-
-- wake word personnalisé (“Hey Robie”)
-- robustesse STT (enfants)
-- TTS naturel
-- gestion des intents plus riche
-
----
-
-# 🧠 Insight clé
-
-Un assistant embarqué n’est pas :
-
-👉 “un modèle puissant”
-
-C’est :
-
-👉 **une architecture bien découpée**
-
----
-
-# 🔮 Suite du projet
-
-- intégration Whisper → LLM → actions
-- mémoire (notes, contexte)
-- personnalité Robie
-- vision (via Jetson ou Coral)
-
----
-
-Robie V1 n’est pas encore “intelligent”.
-Mais il est déjà **vivant**.
-
-Et c’est là que tout commence.
+Pipeline construction and first real-world tests

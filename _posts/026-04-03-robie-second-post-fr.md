@@ -10,11 +10,9 @@ summary: "Reconstitution d'un environnement virtuel sain, travail sur la transcr
 
 ![image](/assets/images/blog/robie_1.jpg)
 
-Voici un article structuré, clair et fidèle à ce que tu as vécu — sans bullshit, avec une vraie narration technique.
-
 ---
 
-# 🤖 Reconstitution d'un environnement virtuel sain
+## Reconstitution d'un environnement virtuel sain
 
 Et... patatra...
 Tout se brise, et notamment la gestion du bonnet voice Adafruit.
@@ -23,35 +21,35 @@ Je dois tout recommencer pour faire en sorte que le son entre et sorte.
 
 ---
 
-## 🔌 Étape 1 — Le vrai mur : l’audio bas niveau
+### Étape 1 — Le vrai mur : l’audio bas niveau
 
 Avant même de parler d’IA, le premier défi a été… le micro.
 
-### Problèmes rencontrés :
+#### Problèmes rencontrés :
 
 - erreurs `RPi.GPIO` → conflit entre environnement Python et libs système
 - `sounddevice` incapable d’ouvrir le flux audio
 - PulseAudio / PipeWire qui monopolisent le device
 - ALSA qui voit la carte… mais refuse tous les formats
 
-### Symptômes typiques :
+#### Symptômes typiques :
 
 - `PortAudioError: Invalid number of channels`
 - `device or resource busy`
 - `Unable to install hw params`
 
-### Leçons importantes :
+#### Leçons importantes :
 
 - Sur Raspberry Pi, **éviter les couches audio haut niveau**
 - Aller directement vers **ALSA (`arecord`)**
 - Désactiver PipeWire/PulseAudio si nécessaire
 - Vérifier la config du codec via `alsamixer`
 
-👉 Une fois cette étape passée, tout devient beaucoup plus simple.
+Une fois cette étape passée, tout devient beaucoup plus simple.
 
 ---
 
-## 🎧 Étape 2 — Pipeline audio fonctionnel
+### Étape 2 — Pipeline audio fonctionnel
 
 Après stabilisation, on obtient enfin :
 
@@ -66,57 +64,57 @@ Et côté UX :
 - LED jaune → traitement
 - son → réponse
 
-👉 À ce stade, le robot “vit” déjà.
+À ce stade, le robot “vit” déjà.
 
 ---
 
-## 🧠 Étape 3 — Tentative avec Whisper (et échec)
+### Étape 3 — Tentative avec Whisper (et échec)
 
-L’étape suivante logique était la transcription avec Whisper.
+L’étape suivante logique était la transcription avec `faster-whisper`.
 
-### Résultat :
+#### Résultat :
 
 - latence énorme (plusieurs secondes voire dizaines de secondes)
 - mauvaise qualité avec modèle `tiny`
 - impossible de monter en qualité sans exploser le temps de calcul
 
-### Pourquoi ça échoue :
+#### Pourquoi ça échoue :
 
 - Raspberry Pi 4 trop limité pour du STT moderne
 - Whisper optimisé pour GPU ou CPU puissants
 - compromis qualité / vitesse impossible à tenir
 
-👉 Conclusion :
+Conclusion :
 **Whisper est excellent… mais pas pour ce cas d’usage sur Pi.**
 
 ---
 
-## 🔄 Étape 4 — Pivot vers Vosk
+### Étape 4 — Pivot vers Vosk
 
 Changement de stratégie : tester Vosk.
 
-### Résultat immédiat :
+#### Résultat immédiat :
 
 - latence bien meilleure
 - transcription presque correcte
 - pipeline stable
 
-👉 Grosse amélioration.
+Grosse amélioration.
 
 Mais…
 
-### Nouveau problème :
+#### Nouveau problème :
 
 - ~10 secondes pour traiter 4 secondes d’audio
 - encore trop lent pour une interaction naturelle
 
 ---
 
-## 💡 Compréhension clé : mauvais problème
+#### Compréhension clé : mauvais problème
 
 Le problème n’était pas le moteur.
 
-👉 Le problème était la tâche.
+Le problème était la tâche.
 
 On demandait :
 
@@ -128,13 +126,11 @@ Alors que le vrai besoin était :
 
 ---
 
-## 🎯 Étape 5 — Changement de paradigme
+### Étape 5 — Changement de paradigme
 
-Au lieu de faire de la dictée vocale, on passe à :
+Au lieu de faire de la dictée vocale, on passe à **reconnaissance de commandes vocales**
 
-👉 **reconnaissance de commandes vocales**
-
-### Exemple :
+#### Exemple :
 
 ```python
 if "bonjour" in text:
@@ -151,7 +147,7 @@ rec = KaldiRecognizer(
 )
 ```
 
-### Résultat :
+#### Résultat :
 
 - plus rapide
 - plus fiable
@@ -159,7 +155,7 @@ rec = KaldiRecognizer(
 
 ---
 
-## 🧠 Architecture finale (V1)
+### Architecture finale (V1)
 
 ```text
 Wake word
@@ -179,15 +175,15 @@ Retour veille
 
 ---
 
-## ⚡ Ce qui a vraiment fait la différence
+### Ce qui a vraiment fait la différence
 
-### ❌ Ce qui ne marche pas bien
+#### Ce qui ne marche pas bien
 
 - Whisper sur Raspberry Pi
 - audio abstrait (sounddevice, PulseAudio)
 - transcription libre sur CPU faible
 
-### ✅ Ce qui marche
+#### Ce qui marche
 
 - ALSA direct (`arecord`)
 - pipeline simple et déterministe
@@ -196,7 +192,7 @@ Retour veille
 
 ---
 
-## 🚀 Résultat
+### Résultat
 
 On passe de :
 
@@ -208,7 +204,7 @@ On passe de :
 
 ---
 
-## 🔮 Et après ?
+### Et après ?
 
 Une fois cette base solide :
 
@@ -219,27 +215,15 @@ Une fois cette base solide :
 
 ---
 
-## 🧭 Conclusion
+## Conclusion
 
 Le point clé de ce projet n’a pas été un problème d’IA.
 
 C’était un problème de **choix d’architecture**.
 
-👉 Sur du matériel limité :
+Sur du matériel limité :
 
 - il faut **simplifier le problème**
 - pas juste optimiser la solution
 
 ---
-
-Si tu construis un assistant embarqué :
-
-> commence simple, local, rapide
-> puis complexifie seulement quand l’expérience utilisateur est déjà bonne
-
----
-
-Et honnêtement :
-
-👉 faire dire “bonjour” à un robot en moins d’une seconde
-vaut largement mieux que comprendre Shakespeare en 10 secondes.

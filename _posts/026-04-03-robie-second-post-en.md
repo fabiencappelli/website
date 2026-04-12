@@ -1,246 +1,230 @@
 ---
-title: "Continuation de la v1"
+title: "Continuation of v1"
 date: 2026-04-03
 lang: en
 project: robie
 image: /assets/images/blog/robie_1.jpg
-categories: [robie, audio]
-summary: "Reconstitution d'un environnement virtuel sain, travail sur la transcription"
+categories: [robie, audio, test2]
+summary: "Rebuilding a clean virtual environment, working on transcription"
 ---
 
-ANGLAIS
 ![image](/assets/images/blog/robie_1.jpg)
 
-Voici un article structuré, clair et fidèle à ce que tu as vécu — sans bullshit, avec une vraie narration technique.
+---
+
+## Rebuilding a Clean Virtual Environment
+
+And... crash.
+
+Everything broke, especially the Adafruit Voice Bonnet handling.
+
+I had to start over to make audio input and output work again.
 
 ---
 
-# 🤖 Reconstitution d'un environnement virtuel sain
+### Step 1 — The Real Wall: Low-Level Audio
 
-Et... patatra...
-Tout se brise, et notamment la gestion du bonnet voice Adafruit.
+Before even talking about AI, the first challenge was… the microphone.
 
-Je dois tout recommencer pour faire en sorte que le son entre et sorte.
+#### Problems encountered:
 
----
+- `RPi.GPIO` errors → conflict between Python environment and system libraries
+- `sounddevice` unable to open the audio stream
+- PulseAudio / PipeWire locking the device
+- ALSA detects the card… but rejects every format
 
-## 🔌 Étape 1 — Le vrai mur : l’audio bas niveau
-
-Avant même de parler d’IA, le premier défi a été… le micro.
-
-### Problèmes rencontrés :
-
-- erreurs `RPi.GPIO` → conflit entre environnement Python et libs système
-- `sounddevice` incapable d’ouvrir le flux audio
-- PulseAudio / PipeWire qui monopolisent le device
-- ALSA qui voit la carte… mais refuse tous les formats
-
-### Symptômes typiques :
+#### Typical symptoms:
 
 - `PortAudioError: Invalid number of channels`
 - `device or resource busy`
 - `Unable to install hw params`
 
-### Leçons importantes :
+#### Important lessons:
 
-- Sur Raspberry Pi, **éviter les couches audio haut niveau**
-- Aller directement vers **ALSA (`arecord`)**
-- Désactiver PipeWire/PulseAudio si nécessaire
-- Vérifier la config du codec via `alsamixer`
+- On Raspberry Pi, **avoid high-level audio layers**
+- Go directly through **ALSA (`arecord`)**
+- Disable PipeWire/PulseAudio if needed
+- Check codec configuration with `alsamixer`
 
-👉 Une fois cette étape passée, tout devient beaucoup plus simple.
+Once this step is solved, everything becomes much easier.
 
 ---
 
-## 🎧 Étape 2 — Pipeline audio fonctionnel
+### Step 2 — Working Audio Pipeline
 
-Après stabilisation, on obtient enfin :
+After stabilization, we finally get:
 
 ```text
-micro → ALSA → enregistrement → traitement → playback
+microphone → ALSA → recording → processing → playback
 ```
 
-Et côté UX :
+And on the UX side:
 
-- LED éteinte → veille
-- LED rouge → écoute
-- LED jaune → traitement
-- son → réponse
+- LED off → standby
+- red LED → listening
+- yellow LED → processing
+- sound → response
 
-👉 À ce stade, le robot “vit” déjà.
-
----
-
-## 🧠 Étape 3 — Tentative avec Whisper (et échec)
-
-L’étape suivante logique était la transcription avec Whisper.
-
-### Résultat :
-
-- latence énorme (plusieurs secondes voire dizaines de secondes)
-- mauvaise qualité avec modèle `tiny`
-- impossible de monter en qualité sans exploser le temps de calcul
-
-### Pourquoi ça échoue :
-
-- Raspberry Pi 4 trop limité pour du STT moderne
-- Whisper optimisé pour GPU ou CPU puissants
-- compromis qualité / vitesse impossible à tenir
-
-👉 Conclusion :
-**Whisper est excellent… mais pas pour ce cas d’usage sur Pi.**
+At this stage, the robot already feels “alive”.
 
 ---
 
-## 🔄 Étape 4 — Pivot vers Vosk
+### Step 3 — Whisper Attempt (and Failure)
 
-Changement de stratégie : tester Vosk.
+The next logical step was transcription with `faster-whisper`.
 
-### Résultat immédiat :
+#### Result:
 
-- latence bien meilleure
-- transcription presque correcte
-- pipeline stable
+- huge latency (several seconds, sometimes tens of seconds)
+- poor quality with the `tiny` model
+- impossible to improve quality without exploding compute time
 
-👉 Grosse amélioration.
+#### Why it fails:
 
-Mais…
+- Raspberry Pi 4 is too limited for modern STT
+- Whisper is optimized for GPUs or powerful CPUs
+- impossible to maintain a good quality/speed tradeoff
 
-### Nouveau problème :
-
-- ~10 secondes pour traiter 4 secondes d’audio
-- encore trop lent pour une interaction naturelle
-
----
-
-## 💡 Compréhension clé : mauvais problème
-
-Le problème n’était pas le moteur.
-
-👉 Le problème était la tâche.
-
-On demandait :
-
-> “Transcris librement tout ce que je dis”
-
-Alors que le vrai besoin était :
-
-> “Reconnais quelques commandes simples”
+Conclusion:
+**Whisper is excellent… but not for this use case on Pi.**
 
 ---
 
-## 🎯 Étape 5 — Changement de paradigme
+### Step 4 — Pivot to Vosk
 
-Au lieu de faire de la dictée vocale, on passe à :
+Strategy shift: test Vosk.
 
-👉 **reconnaissance de commandes vocales**
+#### Immediate result:
 
-### Exemple :
+- much better latency
+- almost correct transcription
+- stable pipeline
 
-```python
-if "bonjour" in text:
-    play("bonjour.mp3")
+Big improvement.
+
+But…
+
+#### New problem:
+
+- ~10 seconds to process 4 seconds of audio
+- still too slow for natural interaction
+
+---
+
+#### Key Insight: Wrong Problem
+
+The issue was not the engine.
+
+The issue was the task.
+
+We were asking:
+
+> “Freely transcribe everything I say”
+
+When the real need was:
+
+> “Recognize a few simple commands”
+
+---
+
+### Step 5 — Paradigm Shift
+
+Instead of voice dictation, move to **voice command recognition**.
+
+#### Example:
+
+```python id="a1r7kp"
+if "hello" in text:
+    play("hello.mp3")
 ```
 
-Ou mieux encore : limiter le vocabulaire directement dans Vosk :
+Or even better: restrict the vocabulary directly in Vosk:
 
-```python
+```python id="w2m5dz"
 rec = KaldiRecognizer(
     model,
     16000,
-    '["bonjour", "histoire", "musique", "stop"]'
+    '["hello", "story", "music", "stop"]'
 )
 ```
 
-### Résultat :
+#### Result:
 
-- plus rapide
-- plus fiable
-- beaucoup plus robuste
+- faster
+- more reliable
+- much more robust
 
 ---
 
-## 🧠 Architecture finale (V1)
+### Final Architecture (V1)
 
 ```text
 Wake word
     ↓
-LED rouge (écoute)
+Red LED (listening)
     ↓
-Enregistrement court (2–3s)
+Short recording (2–3s)
     ↓
-Vosk (vocabulaire limité)
+Vosk (limited vocabulary)
     ↓
-Intent simple
+Simple intent
     ↓
-Réponse audio
+Audio response
     ↓
-Retour veille
+Back to standby
 ```
 
 ---
 
-## ⚡ Ce qui a vraiment fait la différence
+### What Really Made the Difference
 
-### ❌ Ce qui ne marche pas bien
+#### What does not work well
 
-- Whisper sur Raspberry Pi
-- audio abstrait (sounddevice, PulseAudio)
-- transcription libre sur CPU faible
+- Whisper on Raspberry Pi
+- abstracted audio layers (`sounddevice`, PulseAudio)
+- free transcription on a weak CPU
 
-### ✅ Ce qui marche
+#### What works
 
-- ALSA direct (`arecord`)
-- pipeline simple et déterministe
-- Vosk avec vocabulaire restreint
-- logique d’intentions plutôt que NLP complet
-
----
-
-## 🚀 Résultat
-
-On passe de :
-
-> un prototype lent et frustrant
-
-à :
-
-> un assistant vocal rapide, réactif et utilisable par des enfants
+- direct ALSA (`arecord`)
+- simple and deterministic pipeline
+- Vosk with restricted vocabulary
+- intent logic rather than full NLP
 
 ---
 
-## 🔮 Et après ?
+### Result
 
-Une fois cette base solide :
+We move from:
 
-- ajouter détection de fin de parole (VAD)
-- améliorer les réponses (TTS ou sons)
-- ajouter mémoire simple
-- éventuellement brancher un LLM (mais plus tard)
+> a slow and frustrating prototype
 
----
+to:
 
-## 🧭 Conclusion
-
-Le point clé de ce projet n’a pas été un problème d’IA.
-
-C’était un problème de **choix d’architecture**.
-
-👉 Sur du matériel limité :
-
-- il faut **simplifier le problème**
-- pas juste optimiser la solution
+> a fast, responsive voice assistant usable by children
 
 ---
 
-Si tu construis un assistant embarqué :
+### What Comes Next?
 
-> commence simple, local, rapide
-> puis complexifie seulement quand l’expérience utilisateur est déjà bonne
+Once this solid base is ready:
+
+- add end-of-speech detection (VAD)
+- improve responses (TTS or sounds)
+- add simple memory
+- possibly connect an LLM (later)
 
 ---
 
-Et honnêtement :
+## Conclusion
 
-👉 faire dire “bonjour” à un robot en moins d’une seconde
-vaut largement mieux que comprendre Shakespeare en 10 secondes.
+The key issue in this project was not an AI problem.
+
+It was an **architecture choice** problem.
+
+On limited hardware:
+
+- you must **simplify the problem**
+- not just optimize the solution
+
+---
