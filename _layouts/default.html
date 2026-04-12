@@ -10,6 +10,42 @@
   <meta name="description"
     content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 | default: site.description }}" />
   <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}" />
+
+  {% assign lang = page.lang | default: "en" %}
+  {% assign page_title = page.title | default: site.title %}
+  {% assign page_description = page.summary | default: page.excerpt | strip_html | strip_newlines | truncate: 160 |
+  default: site.description %}
+
+  {% if page.image %}
+  {% assign share_image = page.image | absolute_url %}
+  {% elsif site.default_social_image %}
+  {% assign share_image = site.default_social_image | absolute_url %}
+  {% else %}
+  {% assign share_image = nil %}
+  {% endif %}
+
+  <meta property="og:locale" content="{% if lang == 'fr' %}fr_FR{% else %}en_US{% endif %}" />
+  <meta property="og:site_name" content="{{ site.title }}" />
+  <meta property="og:title" content="{{ page_title | escape }}" />
+  <meta property="og:description" content="{{ page_description | escape }}" />
+  <meta property="og:url" content="{{ page.url | absolute_url }}" />
+  <meta property="og:type" content="{% if page.date %}article{% else %}website{% endif %}" />
+
+  {% if share_image %}
+  <meta property="og:image" content="{{ share_image }}" />
+  <meta property="og:image:secure_url" content="{{ share_image }}" />
+  {% endif %}
+
+  {% if page.date %}
+  <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}" />
+  {% endif %}
+
+  <meta name="twitter:card" content="{% if share_image %}summary_large_image{% else %}summary{% endif %}" />
+  <meta name="twitter:title" content="{{ page_title | escape }}" />
+  <meta name="twitter:description" content="{{ page_description | escape }}" />
+  {% if share_image %}
+  <meta name="twitter:image" content="{{ share_image }}" />
+  {% endif %}
 </head>
 
 <body>
