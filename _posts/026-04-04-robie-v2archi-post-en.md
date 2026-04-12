@@ -108,7 +108,7 @@ Concretely, I will probably need at least:
 - one component monitoring the clock
 - one orchestrator deciding what to do
 
-## Second Constraint: Clean Inter-Component Communication
+### Second Constraint: Clean Inter-Component Communication
 
 As soon as multiple activities run in parallel, I need to define how they communicate.
 
@@ -131,7 +131,7 @@ I need logic such as:
 
 Otherwise, I’ll quickly end up with spaghetti code.
 
-## Third Constraint: A Real State Model
+### Third Constraint: A Real State Model
 
 My diagram implicitly says that we are no longer only in “do an action”, but in “be in a state”.
 
@@ -163,7 +163,7 @@ Otherwise I’ll get fuzzy behaviors like:
 “What does Robie do if someone talks while it is reading?”
 “What happens if midnight occurs during a volume command?”
 
-## Fourth Constraint: Clean Interruption
+### Fourth Constraint: Clean Interruption
 
 Continuous audio playback means I must be able to:
 
@@ -182,7 +182,7 @@ It must be a controllable component, with commands such as:
 
 And those commands must remain safe no matter when they arrive.
 
-## Fifth Constraint: Speech Recognition Can No Longer Be Designed the Same Way
+### Fifth Constraint: Speech Recognition Can No Longer Be Designed the Same Way
 
 In a classic conversational loop, we do:
 
@@ -209,7 +209,7 @@ but rather:
 
 That is a different kind of need.
 
-## Sixth Constraint: Risk of Robie Hearing Itself
+### Sixth Constraint: Risk of Robie Hearing Itself
 
 This is probably one of the hidden big challenges of reading mode.
 
@@ -229,7 +229,7 @@ So I’ll need safeguards such as:
 
 The diagram does not mention it, but formalizing `Reading` as an interactive mode directly creates this problem.
 
-## Seventh Constraint: Priority Logic
+### Seventh Constraint: Priority Logic
 
 Not all events have the same weight.
 
@@ -248,7 +248,7 @@ So I will need to define a policy:
 
 Without that, strange behaviors are likely.
 
-## Eighth Constraint: Separate Behavior from Implementation
+### Eighth Constraint: Separate Behavior from Implementation
 
 The diagram is excellent because it formalizes the expected behavior.
 But it also forces an important distinction:
@@ -271,7 +271,7 @@ Even if I have not yet chosen between:
 - queue
 - process
 
-## Summary
+### Summary
 
 This formalization leads to one clear conclusion:
 

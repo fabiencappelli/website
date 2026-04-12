@@ -108,7 +108,7 @@ Concrètement, il faudra probablement au minimum distinguer :
 - un composant qui surveille l’heure
 - un orchestrateur qui décide quoi faire
 
-## Deuxième contrainte : Communication inter-composants propre
+### Deuxième contrainte : Communication inter-composants propre
 
 Dès qu'on a plusieurs activités en parallèle, on doit définir comment elles communiquent.
 
@@ -131,7 +131,7 @@ Il faut une logique de type :
 
 Sinon je vais très vite entrer dans du spaghetti.
 
-## Troisième contrainte : Vrai modèle d’état
+### Troisième contrainte : Vrai modèle d’état
 
 Mon schéma dit implicitement qu’on n’est plus seulement dans “faire une action”, mais dans “être dans un état”.
 
@@ -162,7 +162,7 @@ Sinon j'aurai des comportements flous du genre :
 “que fait Robie si on lui parle pendant qu’il lit ?”
 “qu’arrive-t-il si minuit tombe pendant une commande volume ?”
 
-## Quatrième contrainte : Interruption propre
+### Quatrième contrainte : Interruption propre
 
 Une lecture audio continue, ça veut dire qu’il faudra savoir :
 
@@ -181,7 +181,7 @@ Il faudra un composant pilotable, avec des commandes du type :
 
 Et ces commandes devront être sûres même si elles arrivent à n’importe quel moment.
 
-## Cinquième contrainte : la reconnaissance vocale ne peut plus être pensée comme avant
+### Cinquième contrainte : la reconnaissance vocale ne peut plus être pensée comme avant
 
 Dans la boucle conversationnelle classique, on fait :
 
@@ -206,7 +206,7 @@ mais plutôt :
 
 C’est un autre type de besoin.
 
-## Sixième contrainte : Risque que Robie s’entende lui-même
+### Sixième contrainte : Risque que Robie s’entende lui-même
 
 C’est sans doute l’un des gros défis cachés du mode lecture.
 
@@ -226,7 +226,7 @@ Donc je devrai penser à des garde-fous :
 
 Le diagramme n’en parle pas, mais la formalisation de `Reading` comme mode interactif implique directement ce problème.
 
-## Septième contrainte : Logique de priorités
+### Septième contrainte : Logique de priorités
 
 Tous les événements n’ont pas le même poids.
 
@@ -245,7 +245,7 @@ Donc il faudra définir une politique :
 
 Sans ça, risques de comportements bizarres.
 
-## Huitième contrainte : Séparer comportement et implémentation
+### Huitième contrainte : Séparer comportement et implémentation
 
 Le schéma est excellent parce qu’il formalise le comportement attendu.
 Mais il force aussi une distinction importante :
