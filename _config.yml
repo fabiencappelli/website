@@ -42,3 +42,8 @@ defaults:
       path: "en"
     values:
       lang: en
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag

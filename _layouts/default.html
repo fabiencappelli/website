@@ -10,7 +10,7 @@
   <meta name="description"
     content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 | default: site.description }}" />
   <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}" />
-
+  {% seo %}
   {% assign lang = page.lang | default: "en" %}
   {% assign page_title = page.title | default: site.title %}
   {% assign page_description = page.summary | default: page.excerpt | strip_html | strip_newlines | truncate: 160 |
@@ -317,6 +317,33 @@
 
     renderMermaids();
   </script>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p class="site-footer__meta">
+        © {{ site.time | date: "%Y" }} Fabien Cappelli
+      </p>
+
+      <nav class="site-footer__nav" aria-label="Liens de bas de page">
+        <a href="{{ '/feed.xml' | relative_url }}" target="_blank" rel="noopener" aria-label="RSS Feed" title="RSS Feed"
+          class="rss-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="6" cy="18" r="2.2"></circle>
+            <path d="M4 11a9 9 0 0 1 9 9"></path>
+            <path d="M4 5a15 15 0 0 1 15 15"></path>
+          </svg>
+        </a>
+
+        <a href="https://www.linkedin.com/in/fabien-cappelli-a71252a8/" target="_blank" rel="noopener me"
+          aria-label="LinkedIn" title="LinkedIn" class="linkedin-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A1.96 1.96 0 1 0 5.3 6.94 1.97 1.97 0 0 0 5.25 3ZM20.7 12.62c0-3.47-1.85-5.08-4.31-5.08-1.99 0-2.88 1.09-3.38 1.86V8.5H9.63V20h3.38v-6.42c0-.34.02-.68.12-.92.27-.68.89-1.39 1.93-1.39 1.36 0 1.9 1.05 1.9 2.58V20h3.38z" />
+          </svg>
+        </a>
+      </nav>
+    </div>
+  </footer>
 </body>
 
 </html>

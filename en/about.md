@@ -25,3 +25,7 @@ Building practical data pipelines and API-driven architectures
 Making complex systems understandable (documentation, training, workflows)
 
 I particularly enjoy working at the boundary between technical depth and real-world usage — where clarity, precision, and adaptability matter more than theoretical perfection.
+
+---
+
+{% include button.html url="https://fabiencappelli.com/assets/pdf/CVTIS2026.pdf" text="Download my resume" %}

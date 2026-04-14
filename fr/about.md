@@ -25,3 +25,7 @@ La construction de pipelines de données et d’architectures orientées API, pr
 La mise en intelligibilité de systèmes complexes (documentation, formation, workflows)
 
 J’apprécie particulièrement travailler à la frontière entre profondeur technique et usages réels — là où la clarté, la précision et l’adaptabilité comptent davantage que la perfection théorique.
+
+---
+
+{% include button.html url="https://fabiencappelli.com/assets/pdf/CVTIS2026.pdf" text="Télécharger mon CV" %}
