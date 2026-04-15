@@ -19,6 +19,26 @@ layout: default
 </section>
 {% endif %}
 
+{% if page.github_repos and page.github_repos.size > 0 %}
+<section class="project-links">
+  <h2 class="project-links__title">
+    {% if page.lang == 'fr' %}Liens du projet{% else %}Project links{% endif %}
+  </h2>
+
+  <div class="project-links__list">
+    {% for repo in page.github_repos %}
+    <a class="project-link project-link--github" href="{{ repo.url }}" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2.17c-3.2.69-3.88-1.35-3.88-1.35-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.74 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.24-1.27-5.24-5.67 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.17a10.98 10.98 0 0 1 5.78 0c2.2-1.48 3.16-1.17 3.16-1.17.63 1.59.24 2.76.12 3.05.74.8 1.18 1.82 1.18 3.07 0 4.41-2.69 5.38-5.25 5.66.41.35.77 1.03.77 2.09v3.09c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z" />
+      </svg>
+      <span>{{ repo.label | default: "GitHub" }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
 <div class="project-content">{{ content }}</div>
 
 <h2>Related posts</h2>

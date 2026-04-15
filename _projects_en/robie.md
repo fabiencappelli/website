@@ -5,6 +5,9 @@ summary: Voice assistant on Raspberry Pi
 stack: [Python, Vosk, TTS]
 order: 2
 featured: true
+github_repos:
+  - url: https://github.com/fabiencappelli/Robie
+    label: GitHub
 ---
 
 ## Building an Embedded Voice Assistant on Raspberry Pi: Robie

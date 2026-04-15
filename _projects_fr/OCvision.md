@@ -5,6 +5,9 @@ summary: Segmentation sémantique d’images appliquée à des systèmes de vis
 stack: [Python, Keras, Segmentation Models, FastAPI, Streamlit, Docker]
 featured: true
 order: 1
+github_repos:
+  - url: https://github.com/fabiencappelli/Projet_8
+    label: GitHub du Projet 8
 ---
 
 L’objectif était de concevoir, entraîner, comparer et déployer des modèles de deep learning capables d’assigner une classe sémantique à chaque pixel d’une image, tout en équilibrant :

@@ -5,6 +5,9 @@ summary: Assistant vocal sur Raspberry Pi
 stack: [Python, Vosk, TTS]
 order: 2
 featured: true
+github_repos:
+  - url: https://github.com/fabiencappelli/Robie
+    label: GitHub
 ---
 
 ## Construire un assistant vocal embarqué sur Raspberry Pi: Robie

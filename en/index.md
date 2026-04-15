@@ -23,14 +23,14 @@ I work today at the intersection of technical implementation, documentation, app
 {% assign featured_projects = site.projects_en | where: "featured", true | sort: "order" %}
 
 <div class="projects-grid">
-  {% for project in featured_projects limit: 2 %}
+  {% for project in featured_projects limit: 6 %}
     <a href="{{ project.url | relative_url }}" class="card card-link">
       <h3>{{ project.title }}</h3>
       <p>{{ project.summary }}</p>
 
       {% if project.stack %}
       <div class="tags">
-        {% for tech in project.stack limit: 4 %}
+        {% for tech in project.stack limit: 6 %}
           <span class="tag">{{ tech }}</span>
         {% endfor %}
       </div>

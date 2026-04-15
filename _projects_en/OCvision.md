@@ -5,6 +5,9 @@ summary: Semantic image segmentation applied to intelligent vision systems using
 stack: [Python, Keras, Segmentation Models, FastAPI, Streamlit, Docker]
 featured: true
 order: 1
+github_repos:
+  - url: https://github.com/fabiencappelli/Projet_8
+    label: GitHub for Project 8
 ---
 
 The objective was to design, train, compare, and deploy deep learning models capable of assigning a semantic class to every pixel in an image, while balancing:

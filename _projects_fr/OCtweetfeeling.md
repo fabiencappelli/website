@@ -21,6 +21,9 @@ stack:
   ]
 featured: true
 order: 3
+github_repos:
+  - url: https://github.com/fabiencappelli/Projet7API
+    label: GitHub
 ---
 
 ## Contexte et Objectif du Projet
