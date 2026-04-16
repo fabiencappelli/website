@@ -52,13 +52,14 @@ title: "404"
             content: "";
             position: absolute;
             inset: 0;
-            background-image: url("{{ '/assets/images/owl.png' | relative_url }}");
+            background-image: url("{{ '/owl.png' | relative_url }}");
             background-repeat: no-repeat;
-            background-position: center center;
-            background-size: min(72vw, 820px);
-            opacity: 0.32;
-            filter: drop-shadow(0 0 28px rgba(173, 232, 255, 0.16));
-            animation: owlPulse 5.2s ease-in-out infinite;
+            background-position: center 44%;
+            background-size: min(82vw, 980px);
+            opacity: 0.5;
+            filter:
+                drop-shadow(0 0 18px rgba(173, 232, 255, 0.18)) drop-shadow(0 0 42px rgba(173, 232, 255, 0.12));
+            animation: owlPulse 4.2s ease-in-out infinite;
             pointer-events: none;
         }
 
@@ -121,13 +122,14 @@ title: "404"
             padding: clamp(2rem, 4vw, 4rem);
             border: 1px solid var(--panel-border);
             border-radius: 24px;
-            background: var(--panel);
-            backdrop-filter: blur(8px);
+            background: rgba(4, 12, 18, 0.28);
+            backdrop-filter: blur(5px);
             box-shadow:
                 0 0 0 1px rgba(255, 255, 255, 0.02) inset,
-                0 20px 60px rgba(0, 0, 0, 0.55),
+                0 20px 60px rgba(0, 0, 0, 0.42),
                 0 0 42px rgba(91, 197, 255, 0.08);
             text-align: center;
+            animation: panelGlitch 5s infinite steps(1, end);
         }
 
         .panel::before {
@@ -157,10 +159,12 @@ title: "404"
             color: var(--fg);
             text-shadow:
                 0 0 12px rgba(255, 255, 255, 0.25),
-                0 0 30px var(--glow);
+                0 0 30px var(--glow),
+                -2px 0 rgba(0, 180, 255, 0.18),
+                2px 0 rgba(255, 255, 255, 0.12);
             position: relative;
             display: inline-block;
-            animation: softGlitch 4.8s infinite;
+            animation: hardGlitch 2.8s infinite steps(1, end);
         }
 
         .code404::before,
@@ -168,22 +172,22 @@ title: "404"
             content: "404";
             position: absolute;
             inset: 0;
-            opacity: 0.22;
             pointer-events: none;
+            opacity: 0.55;
         }
 
         .code404::before {
-            transform: translate(-2px, 0);
-            color: #7fdcff;
-            clip-path: inset(0 0 55% 0);
-            animation: glitchSlice1 3.6s infinite linear alternate-reverse;
+            color: #55d6ff;
+            transform: translate(-4px, 0);
+            clip-path: inset(0 0 58% 0);
+            animation: glitchSlice1 1.15s infinite steps(1, end);
         }
 
         .code404::after {
-            transform: translate(2px, 0);
             color: #ffffff;
-            clip-path: inset(45% 0 0 0);
-            animation: glitchSlice2 2.9s infinite linear alternate-reverse;
+            transform: translate(4px, 0);
+            clip-path: inset(48% 0 0 0);
+            animation: glitchSlice2 0.95s infinite steps(1, end);
         }
 
         .sub {
@@ -328,27 +332,48 @@ title: "404"
             }
         }
 
-        @keyframes softGlitch {
+        @keyframes hardGlitch {
 
             0%,
+            84%,
             100% {
-                transform: translate(0, 0);
+                transform: translate(0, 0) skew(0deg);
+            }
+
+            85% {
+                transform: translate(-3px, 2px) skew(-1deg);
+            }
+
+            86% {
+                transform: translate(4px, -2px) skew(1deg);
+            }
+
+            87% {
+                transform: translate(-5px, 1px) skew(0deg);
+            }
+
+            88% {
+                transform: translate(2px, -1px) skew(2deg);
+            }
+
+            89% {
+                transform: translate(0, 0) skew(0deg);
             }
 
             96% {
-                transform: translate(0, 0);
+                transform: translate(0, 0) skew(0deg);
             }
 
             97% {
-                transform: translate(-1px, 0);
+                transform: translate(-6px, 0) skew(-2deg);
             }
 
             98% {
-                transform: translate(1px, 0);
+                transform: translate(5px, 0) skew(2deg);
             }
 
             99% {
-                transform: translate(0, -1px);
+                transform: translate(-2px, 1px) skew(0deg);
             }
         }
 
@@ -356,23 +381,43 @@ title: "404"
 
             0%,
             100% {
-                transform: translate(-2px, 0);
-            }
-
-            20% {
-                transform: translate(-3px, 1px);
-            }
-
-            40% {
-                transform: translate(-1px, -1px);
-            }
-
-            60% {
                 transform: translate(-4px, 0);
             }
 
+            10% {
+                transform: translate(-8px, 2px);
+            }
+
+            20% {
+                transform: translate(2px, -1px);
+            }
+
+            30% {
+                transform: translate(-6px, 1px);
+            }
+
+            40% {
+                transform: translate(4px, -2px);
+            }
+
+            50% {
+                transform: translate(-9px, 0);
+            }
+
+            60% {
+                transform: translate(3px, 2px);
+            }
+
+            70% {
+                transform: translate(-5px, -1px);
+            }
+
             80% {
-                transform: translate(-2px, 1px);
+                transform: translate(6px, 1px);
+            }
+
+            90% {
+                transform: translate(-7px, 0);
             }
         }
 
@@ -380,23 +425,163 @@ title: "404"
 
             0%,
             100% {
-                transform: translate(2px, 0);
-            }
-
-            20% {
-                transform: translate(3px, -1px);
-            }
-
-            40% {
-                transform: translate(1px, 1px);
-            }
-
-            60% {
                 transform: translate(4px, 0);
             }
 
+            10% {
+                transform: translate(8px, -2px);
+            }
+
+            20% {
+                transform: translate(-2px, 1px);
+            }
+
+            30% {
+                transform: translate(6px, -1px);
+            }
+
+            40% {
+                transform: translate(-4px, 2px);
+            }
+
+            50% {
+                transform: translate(9px, 0);
+            }
+
+            60% {
+                transform: translate(-3px, -2px);
+            }
+
+            70% {
+                transform: translate(5px, 1px);
+            }
+
             80% {
-                transform: translate(2px, -1px);
+                transform: translate(-6px, -1px);
+            }
+
+            90% {
+                transform: translate(7px, 0);
+            }
+        }
+
+        @keyframes panelGlitch {
+
+            0%,
+            94%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            95% {
+                transform: translate(-2px, 1px);
+            }
+
+            96% {
+                transform: translate(3px, -1px);
+            }
+
+            97% {
+                transform: translate(-4px, 0);
+            }
+
+            98% {
+                transform: translate(2px, 1px);
+            }
+        }
+
+        .glitch-bars {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 3;
+        }
+
+        .glitch-bars::before,
+        .glitch-bars::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 14px;
+            background:
+                linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(120, 220, 255, 0.08) 20%,
+                    rgba(255, 255, 255, 0.18) 50%,
+                    rgba(120, 220, 255, 0.08) 80%,
+                    transparent 100%);
+            opacity: 0;
+        }
+
+        .glitch-bars::before {
+            top: 28%;
+            animation: barFlicker1 3.1s infinite steps(1, end);
+        }
+
+        .glitch-bars::after {
+            top: 63%;
+            animation: barFlicker2 2.4s infinite steps(1, end);
+        }
+
+        @keyframes barFlicker1 {
+
+            0%,
+            90%,
+            100% {
+                opacity: 0;
+                transform: translateX(0);
+            }
+
+            91% {
+                opacity: 0.9;
+                transform: translateX(-18px);
+            }
+
+            92% {
+                opacity: 0.35;
+                transform: translateX(10px);
+            }
+
+            93% {
+                opacity: 0.75;
+                transform: translateX(-8px);
+            }
+
+            94% {
+                opacity: 0;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes barFlicker2 {
+
+            0%,
+            82%,
+            100% {
+                opacity: 0;
+                transform: translateX(0);
+            }
+
+            83% {
+                opacity: 0.8;
+                transform: translateX(20px);
+            }
+
+            84% {
+                opacity: 0.3;
+                transform: translateX(-14px);
+            }
+
+            85% {
+                opacity: 0.7;
+                transform: translateX(8px);
+            }
+
+            86% {
+                opacity: 0;
+                transform: translateX(0);
             }
         }
 
@@ -438,6 +623,7 @@ title: "404"
 
 <body>
     <div class="noise" aria-hidden="true"></div>
+    <div class="glitch-bars" aria-hidden="true"></div>
 
     <main class="wrap">
         <section class="panel" aria-labelledby="not-found-title">
