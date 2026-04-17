@@ -6,9 +6,19 @@ description: A propos de moi
 permalink: /fr/about/
 ---
 
-Je suis spécialiste de l’implémentation orientée IA, travaillant à l’intersection des données, des systèmes et des contraintes du réel.
+Arrivant à l'orée de la cinquantaine, je m’oriente aujourd’hui vers des rôles de solution design et d’implémentation technique à forte composante IA.
 
-Mon travail se situe là où les choses doivent réellement fonctionner : connecter des API, structurer des données imparfaites, aligner les parties prenantes, et rendre des systèmes complexes utilisables en production. J’interviens notamment sur des systèmes de traçabilité (en particulier dans le cadre de la conformité EUDR), en accompagnant la conception et la mise en œuvre de workflows qui font le lien entre exigences techniques et réglementaires.
+En apprentissage constant, passionné par des domaines très différents, j'ai toujours cultivé une tendance à faire des liens, à déceler des patterns, à élaborer une vision systémique.
+
+Mon approche des outils techniques est, depuis plus de 25 ans, pragmatique. Plutôt que d'apprendre intensivement tel langage informatique, ou tel environnement technique, je m'adapte aux outils disponibles et bricole de manière presque instinctive. Avec, en filigrane, une véritable pulsion d'automatisation, résumée dans deux devises fortes :
+
+> Un ordinateur n'est pas une machine à écrire avec un écran
+
+> Je m'en voudrais de voler son travail à un robot
+
+Mon activité professionnelle actuelle se situe à l’intersection des données, des systèmes et des contraintes du réel. J’interviens là où les choses doivent effectivement tenir ensemble : connecter des API, structurer des données imparfaites, clarifier des flux complexes, aligner les parties prenantes, et rendre des systèmes utilisables, robustes et compréhensibles. Mais aussi dans la relation humaine, dans l'écoute, le rire, la compréhension et la volonté de créer des passerelles entre cultures, entre équipes, entre parcours sociaux, entre divers styles cognitifs...
+
+---
 
 Mon parcours est atypique. Formé en linguistique puis en mathématiques et data science, j’ai également exercé pendant une douzaine d’années comme paléographe, en parallèle de mes autres activités. Cette combinaison influence profondément ma manière d’aborder les problèmes : je cherche d’abord à comprendre les structures, les motifs et le sens avant de proposer des solutions.
 
@@ -18,13 +28,7 @@ J’utilise également des plateformes comme SharePoint ou Google Workspace pour
 
 Mon parcours s’inscrit aussi dans une expérience internationale : j’ai vécu et travaillé en France, aux États-Unis, en Nouvelle-Zélande et en Irlande. Ces contextes variés ont renforcé ma capacité à m’adapter, à comprendre des environnements différents et à collaborer avec des profils divers.
 
-Aujourd’hui, je m’intéresse particulièrement à :
-
-La conception de systèmes d’IA robustes et explicables
-La construction de pipelines de données et d’architectures orientées API, pragmatiques et exploitables
-La mise en intelligibilité de systèmes complexes (documentation, formation, workflows)
-
-J’apprécie particulièrement travailler à la frontière entre profondeur technique et usages réels — là où la clarté, la précision et l’adaptabilité comptent davantage que la perfection théorique.
+En plus de la diversité des sujets d'intérêt, d'études, des zones géographiques, mes expériences professionnelles s'étendent de la gestion administrative à l'enseignement, de la conformité logicielle à la modélisation 3D, du support client au dessin industriel. Entre autres...
 
 ---
 
