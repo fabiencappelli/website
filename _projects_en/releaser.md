@@ -44,7 +44,7 @@ This project addresses that need by automatically transforming a Jira export int
 
 ## Pipeline Overview
 
-```mermaid
+<div class="mermaid">
 flowchart TD
     A["Jira Export (HTML)"] --> B["Parse tickets (BeautifulSoup)"]
     B --> C["Thematic grouping + script (OpenAI)"]
@@ -52,7 +52,7 @@ flowchart TD
     D --> E["WAV normalization + pauses + audio concat (FFmpeg)"]
     E --> F["Slide rendering + video concat + audio/video mux (FFmpeg)"]
     F --> G["release.mp4"]
-```
+</div>
 
 ## Input Data and Artifacts
 

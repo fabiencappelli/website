@@ -44,7 +44,7 @@ Ce projet répond à ce besoin en transformant automatiquement un export Jira en
 
 ## Vue d’ensemble du pipeline
 
-```mermaid
+<div class="mermaid">
 flowchart TD
     A["Export Jira (HTML)"] --> B["Parse tickets (BeautifulSoup)"]
     B --> C["Groupement thématique + script (OpenAI)"]
@@ -52,7 +52,7 @@ flowchart TD
     D --> E["Normalisation WAV + pauses + concat audio (FFmpeg)"]
     E --> F["Rendu slides + concat vidéo + mux audio/vidéo (FFmpeg)"]
     F --> G["release.mp4"]
-```
+</div>
 
 ## Données d’entrée et artefacts
 
