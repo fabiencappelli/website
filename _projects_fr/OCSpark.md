@@ -4,7 +4,7 @@ slug: OCSpark
 summary: Conception et déploiement d’un pipeline Big Data scalable pour le traitement massif d’images, l’extraction automatique de caractéristiques visuelles et la réduction de dimension, dans une logique de workflow data engineering et machine learning orienté production.
 stack: [Python, AWS S3, EMR, Spark, PySpark, JupyterHub, MobileNetV2, PCA]
 featured: true
-order: 4
+order: 6
 ---
 
 ## Contexte

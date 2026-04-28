@@ -4,7 +4,7 @@ slug: OCvision
 summary: Segmentation sémantique d’images appliquée à des systèmes de vision intelligents, en utilisant des scènes urbaines issues du dataset Cityscapes.
 stack: [Python, Keras, Segmentation Models, FastAPI, Streamlit, Docker]
 featured: true
-order: 1
+order: 4
 github_repos:
   - url: https://github.com/fabiencappelli/Projet_8
     label: GitHub du Projet 8

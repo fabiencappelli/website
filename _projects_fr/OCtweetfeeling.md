@@ -20,7 +20,7 @@ stack:
     Azure,
   ]
 featured: true
-order: 3
+order: 5
 github_repos:
   - url: https://github.com/fabiencappelli/Projet7API
     label: GitHub
