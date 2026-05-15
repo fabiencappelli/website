@@ -53,22 +53,23 @@ That realization completely changed the architecture of the project.
 
 The classic reflex would have been:
 
-<div class="mermaid">
-    flowchart LR
-    A[Markdown] --> B[HTML]
-    B --> C[target platform]
-</div>
+```text
+Markdown → HTML → target platform
+```
 
 But that would have required rebuilding the entire rendering logic.
 
 Instead, we chose another direction:
 
-<div class="mermaid">
-    flowchart LR
-    A[mkdocs build] --> B[HTML already rendered by MkDocs]
-    B --> C[Extraction + cleanup]
-    C --> D[Publication]
-</div>
+```text
+mkdocs build
+    ↓
+HTML already rendered by MkDocs
+    ↓
+Extraction + cleanup
+    ↓
+Publication
+```
 
 This became the core of the entire pipeline.
 
@@ -122,7 +123,7 @@ They were dynamically generated when articles were created.
 
 Which meant that an internal link such as:
 
-```text
+```text id="7iwyjg"
 ../../../concepts/item/
 ```
 
@@ -204,11 +205,13 @@ The embedded chatbot, however, could not interpret them correctly.
 
 The obvious solution would have been simple:
 
-<div class="mermaid">
-    flowchart LR
-    A[Mermaid] --> B[SVG]
-    B --> C[Final image]
-</div>
+```text
+Mermaid
+    ↓
+SVG
+    ↓
+Final image
+```
 
 But this introduced a much subtler problem.
 
@@ -244,13 +247,15 @@ Because diagrams can become numerous over time, we also introduced a hashing sys
 
 Meaning:
 
-<div class="mermaid">
-    flowchart TD
-    A[Mermaid source] --> B[Hash]
-    B --> C{Diagram already known ?}
-    C -->|yes|[reuse existing asset]
-    D -->|no|[regenerate + upload]
-</div>
+```text
+Mermaid source
+    ↓
+Hash
+    ↓
+Diagram already known?
+       ├── yes → reuse existing asset
+       └── no  → regenerate + upload
+```
 
 Result:
 

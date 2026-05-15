@@ -53,22 +53,23 @@ Ce constat a complètement changé l’architecture du projet.
 
 Le réflexe classique aurait été :
 
-<div class="mermaid">
-    flowchart LR
-    A[Markdown] --> B[HTML]
-    B --> C[plateforme cible]
-</div>
+```text
+Markdown → HTML → plateforme cible
+```
 
 Mais cela aurait obligé à reconstruire toute la logique de rendu.
 
 Au lieu de cela, nous avons pris une autre direction :
 
-<div class="mermaid">
-    flowchart LR
-    A[mkdocs build] --> B[HTML déjà rendu par MkDocs]
-    B --> C[Extraction + nettoyage]
-    C --> D[Publication]
-</div>
+```text
+mkdocs build
+    ↓
+HTML déjà rendu par MkDocs
+    ↓
+Extraction + nettoyage
+    ↓
+Publication
+```
 
 C’est devenu le cœur de tout le pipeline.
 
@@ -195,11 +196,13 @@ Le chatbot embarqué, lui, ne savait pas les interpréter correctement.
 
 Le réflexe classique aurait été simple :
 
-<div class="mermaid">
-    flowchart LR
-    A[Mermaid] --> B[SVG]
-    B --> C[Image finale]
-</div>
+```text
+Mermaid
+    ↓
+SVG
+    ↓
+Image finale
+```
 
 Mais cela posait un problème beaucoup plus subtil.
 
@@ -235,13 +238,15 @@ Comme les diagrammes peuvent devenir nombreux, nous avons ajouté un système de
 
 Ce qui signifie :
 
-<div class="mermaid">
-    flowchart TD
-    A[Source Mermaid] --> B[Hash]
-    B --> C{Diagram déjà connu ?}
-    C -->|oui|[réutiliser l'image existante]
-    D -->|non|[regénérer une image et l'uploader]
-</div>
+```text
+Source Mermaid
+    ↓
+Hash
+    ↓
+Diagram déjà connu ?
+       ├── oui → réutiliser l'image existante
+       └── non  → regénérer une image et l'uploader
+```
 
 Résultat :
 
