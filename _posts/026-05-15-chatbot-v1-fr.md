@@ -8,7 +8,7 @@ categories: [documentation]
 summary: ""
 ---
 
-# Repenser un écosystème documentaire : de la documentation statique à une pipeline de publication intelligente
+# Repenser un écosystème documentaire : de la documentation statique à un pipeline de publication intelligente
 
 Souvent, la documentation technique est pensée comme une destination finale.
 On écrit des pages. On les publie. Elles vivent quelque part dans un portail documentaire plus ou moins élégant. Fin de l’histoire.
@@ -53,22 +53,22 @@ Ce constat a complètement changé l’architecture du projet.
 
 Le réflexe classique aurait été :
 
-```mermaid
+<div class="mermaid">
     flowchart LR
     A[Markdown] --> B[HTML]
     B --> C[plateforme cible]
-```
+</div>
 
 Mais cela aurait obligé à reconstruire toute la logique de rendu.
 
 Au lieu de cela, nous avons pris une autre direction :
 
-```mermaid
+<div class="mermaid">
     flowchart LR
     A[mkdocs build] --> B[HTML déjà rendu par MkDocs]
     B --> C[Extraction + nettoyage]
     C --> D[Publication]
-```
+</div>
 
 C’est devenu le cœur de tout le pipeline.
 
@@ -195,11 +195,11 @@ Le chatbot embarqué, lui, ne savait pas les interpréter correctement.
 
 Le réflexe classique aurait été simple :
 
-```mermaid
+<div class="mermaid">
     flowchart LR
     A[Mermaid] --> B[SVG]
     B --> C[Image finale]
-```
+</div>
 
 Mais cela posait un problème beaucoup plus subtil.
 
@@ -235,13 +235,13 @@ Comme les diagrammes peuvent devenir nombreux, nous avons ajouté un système de
 
 Ce qui signifie :
 
-```mermaid
+<div class="mermaid">
     flowchart TD
-    A[Mermaid source] --> B[Hash]
-    B --> C{Diagram already known ?}
-    C -->|yes|[reuse existing asset]
-    D -->|no|[regenerate + upload]
-```
+    A[Source Mermaid] --> B[Hash]
+    B --> C{Diagram déjà connu ?}
+    C -->|oui|[réutiliser l'image existante]
+    D -->|non|[regénérer une image et l'uploader]
+</div>
 
 Résultat :
 
