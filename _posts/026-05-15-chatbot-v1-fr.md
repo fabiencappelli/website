@@ -2,7 +2,7 @@
 title: "Chatbot Integration v1"
 date: 2026-05-15
 lang: fr
-project: documentation
+project: documentation-ecosystem
 image:
 categories: [documentation]
 summary: ""
