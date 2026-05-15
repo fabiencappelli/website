@@ -123,7 +123,7 @@ They were dynamically generated when articles were created.
 
 Which meant that an internal link such as:
 
-```text id="7iwyjg"
+```text
 ../../../concepts/item/
 ```
 
