@@ -952,3 +952,10 @@ tr:nth-child(even) {
   fill: currentColor;
   flex: 0 0 auto;
 }
+
+.site-footer__ai {
+  margin: 0;
+  font-size: 0.78rem;
+  opacity: 0.3;
+  line-height: 1.4;
+}
