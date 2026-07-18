@@ -5,7 +5,7 @@ lang: fr
 project: documentation-ecosystem
 image:
 categories: [documentation]
-summary: ""
+summary: "Retour sur la création d’un pipeline documentaire intelligent transformant une base de connaissances MkDocs en un système de publication multicanal compatible avec les chatbots et l’IA : extraction du HTML rendu, synchronisation en deux passes, réécriture automatique des liens, gestion intelligente des diagrammes Mermaid et émergence progressive d’un véritable graphe documentaire exploitable par des agents IA."
 ---
 
 # Repenser un écosystème documentaire : de la documentation statique à un pipeline de publication intelligente

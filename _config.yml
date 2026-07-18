@@ -5,6 +5,9 @@ url: "https://fabiencappelli.com"
 default_social_image: /assets/images/homepage.png
 markdown: kramdown
 
+exclude:
+  - README.md
+
 collections:
   projects_fr:
     output: true
