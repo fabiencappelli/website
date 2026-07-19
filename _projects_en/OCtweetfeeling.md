@@ -204,7 +204,7 @@ Both were containerized with Docker to guarantee portability and consistent exec
 
 GitHub was used for source code management, while GitHub Actions automated unit tests and Docker image creation. These images were then pushed to DockerHub before being automatically deployed to Azure, ensuring a robust CI/CD workflow.
 
-{% include button.html url="https://projet7oc.fabiencappelli.com/" text="Project 7 - Live Interface" %}
+{% include button.html url="https://www.linkedin.com/in/fabien-cappelli-a71252a8/" text="Project 7 - Live Interface — Demo available on request via LinkedIn" icon="linkedin" %}
 
 ---
 

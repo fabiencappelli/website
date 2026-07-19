@@ -203,9 +203,9 @@ Vous pouvez tester les démonstrations interactives des deux projets ci-dessous.
 
 Une attention particulière a été portée, pour le Projet 9, à l’accessibilité et à la clarté de l’interface utilisateur.
 
-{% include button.html url="https://projet8oc.fabiencappelli.com/" text="Projet 8 - FPN" %}
+{% include button.html url="https://www.linkedin.com/in/fabien-cappelli-a71252a8/" text="Projet 8 - FPN — Démonstration disponible sur demande sur LinkedIn" icon="linkedin" %}
 
-{% include button.html url="https://projet9oc.fabiencappelli.com/" text="Projet 9 - SegFormer" %}
+{% include button.html url="https://www.linkedin.com/in/fabien-cappelli-a71252a8/" text="Projet 9 - SegFormer — Démonstration disponible sur demande sur LinkedIn" icon="linkedin" %}
 
 ### Limites & Perspectives
 

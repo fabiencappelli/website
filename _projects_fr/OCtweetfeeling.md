@@ -208,7 +208,7 @@ Elles furent encapsulées dans des conteneurs Docker pour garantir la portabilit
 
 GitHub fut utilisé pour la gestion du code source, tandis que GitHub Actions automatisa les tests unitaires et la création des images Docker. Ces images sont ensuite stockées sur DockerHub avant d'être déployées automatiquement sur Azure, garantissant ainsi une intégration et un déploiement continus (CI/CD) robustes.
 
-{% include button.html url="https://projet7oc.fabiencappelli.com/" text="Projet 7 - Interface en ligne" %}
+{% include button.html url="https://www.linkedin.com/in/fabien-cappelli-a71252a8/" text="Projet 7 - Interface en ligne — Démonstration disponible sur demande sur LinkedIn" icon="linkedin" %}
 
 ---
 

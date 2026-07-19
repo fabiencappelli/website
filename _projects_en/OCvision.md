@@ -184,9 +184,9 @@ You can test the interactive demos of both projects below.
 
 Special attention was given, for Project 9, to accessibility and clarity of the user interface.
 
-{% include button.html url="https://projet8oc.fabiencappelli.com/" text="Project 8 - FPN" %}
+{% include button.html url="https://www.linkedin.com/in/fabien-cappelli-a71252a8/" text="Project 8 - FPN — Demo available on request via LinkedIn" icon="linkedin" %}
 
-{% include button.html url="https://projet9oc.fabiencappelli.com/" text="Project 9 - SegFormer" %}
+{% include button.html url="https://www.linkedin.com/in/fabien-cappelli-a71252a8/" text="Project 9 - SegFormer — Demo available on request via LinkedIn" icon="linkedin" %}
 
 ### Limitations & Future Work
 
